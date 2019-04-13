@@ -5,15 +5,16 @@ class Admin::UsersController < ApplicationController
   end
 
   def show
-    if User.find(params[:id]).role == "merchant"
-      redirect_to admin_merchant_path(User.find(params[:id]))
+    if User.find_by_slug(params[:slug]).role == "merchant"
+      redirect_to admin_merchant_path(User.find_by_slug(params[:slug]))
     else
-      @user = User.find(params[:id])
+      @user = User.find_by_slug(params[:slug])
     end
   end
 
   def update
-    @user = User.find(params[:id])
+    # binding.pry
+    @user = User.find_by_slug(params[:slug])
     if params[:update] == "upgrade"
       @user.update(role: 1)
       redirect_to admin_merchant_path(@user), success: "#{@user.name} has been upgraded to a merchant"

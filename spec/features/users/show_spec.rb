@@ -9,7 +9,8 @@ RSpec.describe 'As a registered user' do
                       zip_code: 80202,
                       email_address: "Jeremy@test_user.com",
                       password: "password",
-                      enabled: true)
+                      enabled: true,
+                      slug: "Jeremy-test_user-com")
 
     allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(@user)
 

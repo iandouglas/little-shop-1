@@ -8,7 +8,7 @@ Rails.application.routes.draw do
 
   resources :merchants, only: [:index]
 
-  resources :users, only: [:new, :edit]
+  resources :users, only: [:new, :edit], param: :slug
 
   resources :carts, only: [:create, :edit]
 
@@ -42,9 +42,9 @@ Rails.application.routes.draw do
 
   namespace :admin do
     get '/dashboard', to: 'admins#show'
-    resources :users, only: [:index, :show, :update]
+    resources :users, only: [:index, :show, :update], param: :slug
     resources :orders, only: [:update]
-    resources :merchants, only: [:show, :index] do
+    resources :merchants, only: [:show, :index], param: :slug do
       member {patch :activate}
       member {patch :deactivate}
       member {patch :downgrade}

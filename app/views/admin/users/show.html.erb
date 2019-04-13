@@ -7,7 +7,7 @@
     <p>State: <%= @user.state %></p>
     <p>Zip Code: <%= @user.zip_code %></p>
     <p>Email Address: <%= @user.email_address %></p>
-    <%= link_to "Upgrade to Merchant", admin_user_path(@user,update: :upgrade), method: :patch, id: "button" %>
+    <%= link_to "Upgrade to Merchant", admin_user_path(@user.slug,update: :upgrade), method: :patch, id: "button" %>
   </div>
 
 <% else redirect_to "/public/404" %>
