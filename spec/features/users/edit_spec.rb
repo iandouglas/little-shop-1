@@ -9,7 +9,8 @@ RSpec.describe 'As a registered user' do
                       zip_code: 80202,
                       email_address: "Jeremy@test_user.com",
                       password: "password",
-                      enabled: true)
+                      enabled: true,
+                      slug: "Jeremy-test_user-com")
 
   end
   it "I can edit my profile information" do
@@ -45,7 +46,6 @@ RSpec.describe 'As a registered user' do
     click_link "Edit Profile"
 
     expect(current_path).to eq(edit_user_path(@user))
-
     fill_in "Email address", with: "tester@test.com"
     fill_in "Password", with: "pass"
     fill_in "Confirmation Password", with: "wrong"

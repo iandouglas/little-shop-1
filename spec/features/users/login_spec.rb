@@ -9,7 +9,8 @@ RSpec.describe 'Login Page Workflow' do
                       zip_code: 80202,
                       email_address: "Jeremy@test_user.com",
                       password: "test",
-                      enabled: true)
+                      enabled: true,
+                      slug: "Jeremy-test_user-com")
 
     visit root_path
 
@@ -34,7 +35,8 @@ RSpec.describe 'Login Page Workflow' do
                       zip_code: 80202,
                       email_address: "Jeremy@test_user.com",
                       password: "test",
-                      enabled: true)
+                      enabled: true,
+                      slug: "Jeremy-test_user-com")
 
     visit root_path
 
@@ -60,7 +62,8 @@ RSpec.describe 'Login Page Workflow' do
                       zip_code: 80202,
                       email_address: "Jeremy@test_user.com",
                       password: "test",
-                      enabled: true)
+                      enabled: true,
+                      slug: "Jeremy-test_user-com")
 
     visit root_path
 
@@ -87,7 +90,8 @@ RSpec.describe 'Login Page Workflow' do
                         zip_code: 80202,
                         email_address: "Jeremy@test_user.com",
                         password: "test",
-                        enabled: true)
+                        enabled: true,
+                        slug: "Jeremy-test_user-com")
 
       visit login_path
 
@@ -121,7 +125,8 @@ RSpec.describe 'Login Page Workflow' do
                         zip_code: 80202,
                         email_address: "Jeremy@test_user.com",
                         password: "test",
-                        enabled: true)
+                        enabled: true,
+                        slug: "Jeremy-test_user-com")
 
       visit login_path
 
@@ -163,7 +168,8 @@ RSpec.describe 'Login Page Workflow' do
                         zip_code: 80202,
                         email_address: "test@test_user.com",
                         password: "test",
-                        enabled: false)
+                        enabled: false,
+                        slug: "Jeremy-test_user-com")
       visit login_path
       fill_in "email_address", with: "test@test_user.com"
       fill_in "password", with: "test"

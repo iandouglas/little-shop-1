@@ -21,6 +21,13 @@ RSpec.describe User, type: :model do
     end
   end
 
+  # describe "instance methods" do
+  #   it 'can create slugs' do
+  #     u1 = User.create(name: "Ondrea Chadburn",street_address: "6149 Pine View Alley",city: "Wichita Falls",state: "Texas",zip_code: "76301",email_address: "ochadburn0@washingtonpost.com",password:"EKLr4gmM44", enabled: true, role:1)
+  #     expect(u1.create_slug(u1.email_address)).to eq ("ochadburn0-washingtonpost-com")
+  #   end
+  # end
+
   describe "Merchant methods" do
     before :each do
       @umerch = User.create(name: "Ondrea Chadburn",street_address: "6149 Pine View Alley",city: "Wichita Falls",state: "Texas",zip_code: "76301",email_address: "ofchadburn0@washingtonpost.com",password:"EKLr4gmM44", enabled: true, role:1)
@@ -108,6 +115,6 @@ RSpec.describe User, type: :model do
         expect(User.top_users_by_revenue(@umerch).first.name).to eq(@u4.name)
         expect(User.top_users_by_revenue(@umerch).first.sum).to eq(742.0)
       end
-    end    
+    end
   end
 end

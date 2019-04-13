@@ -10,7 +10,8 @@ RSpec.describe 'When I visit our application I see a navbar' do
                       zip_code: 80202,
                       email_address: "MattW@test_user.com",
                       password: "test",
-                      enabled: true)
+                      enabled: true,
+                      slug: "MattW-test_user-com")
 
     @merchant = User.create(name: "Merchant Matt",
                         role: 1,
@@ -20,7 +21,8 @@ RSpec.describe 'When I visit our application I see a navbar' do
                         zip_code: 80202,
                         email_address: "merchant_matt@test_user.com",
                         password: "merchant",
-                        enabled: true)
+                        enabled: true,
+                        slug: "merchant_matt-test_user-com")
 
     @admin = User.create(name: "Admin Matt",
                         role: 2,
@@ -30,7 +32,8 @@ RSpec.describe 'When I visit our application I see a navbar' do
                         zip_code: 80202,
                         email_address: "admin_matt@test_user.com",
                         password: "merchant",
-                        enabled: true)
+                        enabled: true,
+                        slug: "admin_matt-test_user-com")
   end
 
 #User Story 2
