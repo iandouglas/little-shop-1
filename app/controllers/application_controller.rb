@@ -6,7 +6,8 @@ class ApplicationController < ActionController::Base
   helper_method :current_user,
                 :current_user?,
                 :current_merchant?,
-                :current_admin?
+                :current_admin?,
+                :create_slug
 
   before_action :set_cart
 
@@ -29,4 +30,9 @@ class ApplicationController < ActionController::Base
   def set_cart
     @cart ||= Cart.new(session[:cart])
   end
+
+  def create_slug(params)
+    params[:user][:slug] = params[:user][:email_address].parameterize
+  end
+
 end

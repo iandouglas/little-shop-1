@@ -2,7 +2,7 @@
 <div class="merchants-container">
   <% @merchants.each do |merchant| %>
   <div class="merchant-card">
-    <h2><%= link_to merchant.name, admin_merchant_path(merchant) %></h2>
+    <h2><%= link_to merchant.name, admin_merchant_path(merchant.slug) %></h2>
     <p>Ships from: <%= merchant.city %>, <%= merchant.state %></p>
     <p>Member since: <%= merchant.created_at.to_date %><br>
     <% if merchant.enabled %>
