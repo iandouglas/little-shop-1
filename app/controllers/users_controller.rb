@@ -49,6 +49,7 @@ skip_before_action :require_user, only: [:new, :create]
   end
 
   def update_params
+    create_slug(params) unless params[:user][:email_address].blank?
     up = params.require(:user).permit(:name,
                                  :street_address,
                                  :state,
@@ -56,10 +57,11 @@ skip_before_action :require_user, only: [:new, :create]
                                  :zip_code,
                                  :email_address,
                                  :password,
-                                 :password_confirmation)
-     up.delete(:password) if up[:password].blank?
-     up.delete(:password_confirmation) if up[:password_confirmation].blank?
-     up
+                                 :password_confirmation,
+                                 :slug)
+    up.delete(:password) if up[:password].blank?
+    up.delete(:password_confirmation) if up[:password_confirmation].blank?
+    up
   end
 
   def require_user

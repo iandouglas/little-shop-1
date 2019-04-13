@@ -195,5 +195,13 @@ RSpec.describe "As an admin who is logged in" do
       click_link "#{@u8.name}"
       expect(current_path).to eq("/admin/users/#{@u8.slug}")
     end
+
+    it 'check merchant show link' do
+      visit admin_merchants_path
+      click_link "#{@umerch.name}"
+      expect(current_path).to eq("/admin/merchants/#{@umerch.slug}")
+    end
   end
+
+  
 end
