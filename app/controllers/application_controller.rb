@@ -35,4 +35,12 @@ class ApplicationController < ActionController::Base
     params[:user][:slug] = params[:user][:email_address].parameterize
   end
 
+  def create_item_slug(params)
+    if Item.find_by_item_name(params[:item_name])
+      params[:slug] = (params[:item_name]+rand(100..999).to_s).parameterize
+    else
+      params[:slug] = params[:item_name].parameterize
+    end
+  end
+
 end

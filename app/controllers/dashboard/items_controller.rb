@@ -17,16 +17,16 @@ class Dashboard::ItemsController < ApplicationController
   end
 
   def index
-    @items = Item.merchant_items(current_user)
+    @items = Item.merchant_items(current_user).order(:item_name)
   end
 
   def edit
-    @item = Item.find(params[:id])
+    @item = Item.find_by_slug(params[:id])
   end
 
   def update
-    @item = Item.find(params[:id])
-    if @item.update(item_params)
+    @item = Item.find_by_slug(params[:id])
+    if @item.update(update_item_params)
       redirect_to dashboard_items_path, success: "Item #{@item.id} has been updated"
     else
       render :edit
@@ -34,18 +34,18 @@ class Dashboard::ItemsController < ApplicationController
   end
 
   def destroy
-    @item = Item.find(params[:id]).delete
+    @item = Item.find_by_slug(params[:id]).delete
     redirect_to dashboard_items_path, danger: "Item #{@item.id} has been deleted"
   end
 
   def deactivate
-    @item = Item.find(params[:id])
+    @item = Item.find_by_slug(params[:id])
     @item.update(enabled: false)
     redirect_to dashboard_items_path,  danger: "Item #{@item.id} has been disabled"
   end
 
   def activate
-    @item = Item.find(params[:id])
+    @item = Item.find_by_slug(params[:id])
     @item.update(enabled: true)
     redirect_to dashboard_items_path, success: "Item #{@item.id} has been enabled"
   end
@@ -58,9 +58,24 @@ class Dashboard::ItemsController < ApplicationController
 end
 
   def item_params
-    params.require(:item).permit(:item_name,
+    ip = params.require(:item).permit(:item_name,
                                  :description,
                                  :image_url,
                                  :current_price,
-                                 :inventory).merge(user_id: current_user.id)
+                                 :inventory,
+                                 :slug).merge(user_id: current_user.id)
+    create_item_slug(ip)
+    ip
+  end
+
+  def update_item_params
+    ip = params.require(:item).permit(:item_name,
+                                 :description,
+                                 :image_url,
+                                 :current_price,
+                                 :inventory,
+                                 :slug).merge(user_id: current_user.id)
+    create_item_slug(ip) unless params[:item][:item_name].blank?
+    ip.delete(:item_name) if ip[:item_name].blank?
+    ip
   end

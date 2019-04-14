@@ -4,7 +4,7 @@ Rails.application.routes.draw do
 
   root 'welcome#index'
 
-  resources :items, only: [:index,:show]
+  resources :items, only: [:index,:show], param: :slug
 
   resources :merchants, only: [:index]
 

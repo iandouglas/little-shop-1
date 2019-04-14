@@ -6,6 +6,10 @@ class Item < ApplicationRecord
   validates :inventory, numericality: { greater_than_or_equal_to: 0 }
   validates :current_price, format: { with: /\A\d+(?:\.\d{0,2})?\z/ }, numericality: { greater_than: 0 }
 
+  def to_param
+    slug
+  end
+
   def merchant_name
     User.where(id: self.user_id).first.name
   end
