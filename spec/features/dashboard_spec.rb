@@ -95,7 +95,7 @@ RSpec.describe 'When I visit the merchant dashboard page' do
 
       expect(current_path).to eq(dashboard_items_path)
 
-      expect(page).to have_content("Test Whiskey")
+      expect(page).to have_link("Test Whiskey")
       expect(page).to have_content("4")
       expect(page).to have_content("$55.5")
     end
@@ -145,4 +145,56 @@ RSpec.describe 'When I visit the merchant dashboard page' do
       expect(page).to have_content("error")
     end
   end
+
+  describe 'slugs should be created with item' do
+    it 'creates slug from name if first in database' do
+      visit new_dashboard_item_path
+      fill_in "Item name", with: "Test Whiskey"
+      fill_in "Description", with: "Test Whiskey description"
+      fill_in "Inventory", with: 4
+      fill_in "Current price", with: "55.50"
+
+      click_button "Create Item"
+
+      expect(current_path).to eq(dashboard_items_path)
+
+      click_link "Test Whiskey"
+
+      expect(current_path).to eq("/items/test-whiskey")
+    end
+  end
+
+  describe 'slugs sad path' do
+    it 'creates slug with a random number if name is duplicate' do
+
+      visit new_dashboard_item_path
+      fill_in "Item name", with: "Armorik Double Maturation"
+      fill_in "Description", with: "Test Whiskey description"
+      fill_in "Inventory", with: 5
+      fill_in "Current price", with: "57.50"
+
+      click_button "Create Item"
+
+      within all(".item-card")[1] do
+        click_link "Armorik Double Maturation"
+      end
+      # expect(current_path).to eq("/items/armorik-double-maturation")
+    end
+
+    it 'should update item information without changing slug if no name change' do
+      visit edit_dashboard_item_path(@i19)
+      fill_in "Item name", with: ""
+      fill_in "Description", with: "This is a great whiskey"
+      fill_in "Inventory", with: 4
+
+      click_button "Edit Item"
+
+      expect(current_path).to eq(dashboard_items_path)
+      within first ".item-card" do
+        click_link "#{@i19.item_name}"
+      end
+      expect(current_path).to eq("/items/armorik-double-maturation")
+    end
+  end
+
 end

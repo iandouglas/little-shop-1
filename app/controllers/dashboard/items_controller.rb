@@ -17,7 +17,7 @@ class Dashboard::ItemsController < ApplicationController
   end
 
   def index
-    @items = Item.merchant_items(current_user)
+    @items = Item.merchant_items(current_user).order(:item_name)
   end
 
   def edit
@@ -26,7 +26,7 @@ class Dashboard::ItemsController < ApplicationController
 
   def update
     @item = Item.find_by_slug(params[:id])
-    if @item.update(item_params)
+    if @item.update(update_item_params)
       redirect_to dashboard_items_path, success: "Item #{@item.id} has been updated"
     else
       render :edit
@@ -58,11 +58,24 @@ class Dashboard::ItemsController < ApplicationController
 end
 
   def item_params
-    create_item_slug(params)
-    params.require(:item).permit(:item_name,
+    ip = params.require(:item).permit(:item_name,
                                  :description,
                                  :image_url,
                                  :current_price,
                                  :inventory,
                                  :slug).merge(user_id: current_user.id)
+    create_item_slug(ip)
+    ip
+  end
+
+  def update_item_params
+    ip = params.require(:item).permit(:item_name,
+                                 :description,
+                                 :image_url,
+                                 :current_price,
+                                 :inventory,
+                                 :slug).merge(user_id: current_user.id)
+    create_item_slug(ip) unless params[:item][:item_name].blank?
+    ip.delete(:item_name) if ip[:item_name].blank?
+    ip
   end

@@ -18,7 +18,7 @@ RSpec.describe "Items Show Page" do
   end
 
 
-  context "anyone visiting an item show page" do
+  context "anyone visiting an item show page" do 
     it "shows all the information for that item" do
       visit item_path(@i1)
       expect(page).to have_content(@i1.item_name)
@@ -71,4 +71,6 @@ RSpec.describe "Items Show Page" do
       expect(page).to_not have_button("Add to Cart")
     end
   end
+
+
 end
