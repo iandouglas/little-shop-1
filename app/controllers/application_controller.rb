@@ -35,4 +35,12 @@ class ApplicationController < ActionController::Base
     params[:user][:slug] = params[:user][:email_address].parameterize
   end
 
+  def create_item_slug(params)
+    if Item.find_by_item_name(params[:item_name])
+      params[:item][:slug] = (params[:item][:item_name]+params[:item][:id]).parameterize
+    else
+      params[:item][:slug] = params[:item][:item_name].parameterize
+    end
+  end
+
 end
