@@ -1,5 +1,4 @@
-class Dashboard::ItemsController < ApplicationController
-  before_action :require_merchant
+class Dashboard::ItemsController < Dashboard::BaseController
 
   def new
     @item = Item.new
@@ -52,10 +51,6 @@ class Dashboard::ItemsController < ApplicationController
 
   private
 
-  def require_merchant
-    render file: "/public/404" unless current_merchant?
-  end
-end
 
   def item_params
     params.require(:item).permit(:item_name,
@@ -64,3 +59,6 @@ end
                                  :current_price,
                                  :inventory).merge(user_id: current_user.id)
   end
+
+
+end

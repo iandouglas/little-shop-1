@@ -10,13 +10,13 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20190415173138) do
+ActiveRecord::Schema.define(version: 20190415175417) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
   create_table "discounts", force: :cascade do |t|
-    t.integer "type"
+    t.integer "role"
     t.float "discount"
     t.integer "min_quantity"
     t.bigint "item_id"
