@@ -2,6 +2,7 @@ class User < ApplicationRecord
   attr_accessor :skip_password_validation
   has_many :items
   has_many :orders
+  has_many :ratings
 
 
   has_secure_password allow_blank: true

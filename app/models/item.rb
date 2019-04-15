@@ -2,6 +2,7 @@ class Item < ApplicationRecord
   belongs_to :user
   has_many :order_items
   has_many :orders, through: :order_items
+  has_many :ratings
 
   validates :inventory, numericality: { greater_than_or_equal_to: 0 }
   validates :current_price, format: { with: /\A\d+(?:\.\d{0,2})?\z/ }, numericality: { greater_than: 0 }
@@ -73,5 +74,10 @@ class Item < ApplicationRecord
   def update_inventory(order)
     new_inventory = self.inventory - order.order_items.where(item_id: self.id).first.quantity
     update(inventory: new_inventory)
+  end
+
+  def reviewable?(user_id)
+    user = User.find(user_id)
+    user.ratings.where(item_id: self.id).count < orders.where(status: :shipped).where(user_id: user.id).count
   end
 end
