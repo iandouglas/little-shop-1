@@ -32,6 +32,7 @@ Rails.application.routes.draw do
       member { patch :deactivate }
     end
     resources :orders, only: [:show, :update, :edit]
+    resources :discounts, only: [:index]
   end
 
   get '/cart', to: "carts#show"
