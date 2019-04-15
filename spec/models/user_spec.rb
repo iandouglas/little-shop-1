@@ -4,6 +4,7 @@ RSpec.describe User, type: :model do
   describe "Relationships" do
     it {should have_many :items}
     it {should have_many :orders}
+    it {should have_many :ratings}
   end
 
   describe "Class methods" do

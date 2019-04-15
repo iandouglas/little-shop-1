@@ -27,13 +27,14 @@ RSpec.describe Item, type: :model do
     @oi4 = OrderItem.create(order_id: @o2.id,item_id: @i2.id, quantity: 2,fulfilled: true,order_price: 58.0,created_at: "2018-04-10 09:04:53",updated_at: "2018-04-12 00:25:16")
     @oi5 = OrderItem.create(order_id: @o3.id,item_id: @i1.id, quantity: 6,fulfilled: false,order_price: 44.0,created_at: "2018-04-05 20:03:19",updated_at: "2018-04-14 11:15:44")
     @oi6 = OrderItem.create(order_id: @o3.id,item_id: @i2.id, quantity: 8,fulfilled: false,order_price: 63.0,created_at: "2018-04-04 10:42:04",updated_at: "2018-04-17 16:22:35")
-
+    @oi6 = OrderItem.create(order_id: @o3.id,item_id: @i4.id, quantity: 1,fulfilled: false,order_price: 63.0,created_at: "2018-04-04 10:42:04",updated_at: "2018-04-17 16:22:35")
   end
 
   describe "Relationships" do
     it {should belong_to :user}
     it {should have_many :order_items}
     it {should have_many :orders}
+    it {should have_many :ratings}
   end
 
   context "items index statistics" do
@@ -46,7 +47,7 @@ RSpec.describe Item, type: :model do
 
     describe ".unpopular_five" do
       it "should list the 5 least popular items" do
-        expect(Item.unpopular_five).to include(@i4)
+        expect(Item.unpopular_five).to include(@i3)
       end
     end
   end
@@ -108,6 +109,20 @@ RSpec.describe Item, type: :model do
       it "should subtract quantity ordered from inventory and return new inventory count" do
         @i2.update_inventory(@o2)
         expect(@i2.inventory).to eq(28)
+      end
+    end
+
+    describe ".reviewable?" do
+      it "returns a boolean stating whether a particular user can review an item" do
+        expect(@i1.reviewable?(@u17.id)).to eq(true)
+        expect(@i4.reviewable?(@u17.id)).to eq(false)
+      end
+
+      it "will not allow ratings to be left if user has reviewed items equal to number of orders" do
+        Rating.create(title: "this is fine", description: "I prefer vodka", rating: 3, user_id: @u17.id, item_id: @i2.id)
+        Rating.create(title: "acquired taste", description: "it grows on you", rating: 4, user_id: @u17.id, item_id: @i2.id)
+
+        expect(@i2.reviewable?(@u17.id)).to eq(false)
       end
     end
   end
