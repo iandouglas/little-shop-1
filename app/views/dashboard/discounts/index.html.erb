@@ -4,5 +4,6 @@
     Item: <%= discount.item.item_name %>
     Discount: <%= discount.view_percentage %>%
     Quantity threshold: <%= discount.min_quantity %>
+    <%= button_to "Edit Discount", edit_dashboard_discount_path(discount) %>
+  </div>
   <% end %>
-</div>

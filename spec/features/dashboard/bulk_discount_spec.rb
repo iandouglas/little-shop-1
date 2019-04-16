@@ -36,5 +36,11 @@ RSpec.describe 'As a merchant' do
 
       expect(page).to have_link("Add Discount")
     end
+
+    it "should have a button on each discount to edit" do
+      visit dashboard_discounts_path
+
+      expect(page).to have_button("Edit Discount")
+    end
   end
 end

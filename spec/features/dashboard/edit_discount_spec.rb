@@ -17,7 +17,7 @@ RSpec.describe 'As a merchant' do
     @o39 = @u34.orders.create(status: 2)
     @oi171 = OrderItem.create(order_id: @o39.id,item_id: @i19.id, quantity: 7,fulfilled: false,order_price: 53.0,created_at: "2018-04-07 22:05:50",updated_at: "2018-04-17 08:47:14")
   end
-  
+
   context 'when I visit the edit discount page' do
     it "I can edit a discount when I fill in the form and click submit" do
       visit edit_dashboard_discount_path(@d1)
@@ -27,7 +27,8 @@ RSpec.describe 'As a merchant' do
       click_button "Update Discount"
 
       expect(current_path).to eq(dashboard_discounts_path)
-      within ".discount-#{@d1.id}" do
+
+      within "#discount-#{@d1.id}" do
         expect(page).to have_content("Discount: 10%")
       end
 
@@ -36,8 +37,7 @@ RSpec.describe 'As a merchant' do
       fill_in "Threshold quantity", with: "10"
 
       click_button "Update Discount"
-
-      within ".discount-#{@d2.id}" do
+      within "#discount-#{@d2.id}" do
         expect(page).to have_content("Quantity threshold: 10")
       end
 
@@ -48,8 +48,8 @@ RSpec.describe 'As a merchant' do
 
       click_button "Update Discount"
 
-      within ".discount-#{@d3.id}" do
-        expect(page).to have_content("Percentage: 20")
+      within "#discount-#{@d3.id}" do
+        expect(page).to have_content("Discount: 20%")
         expect(page).to have_content("Quantity threshold: 20")
       end
     end
