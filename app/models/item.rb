@@ -52,7 +52,6 @@ class Item < ApplicationRecord
   end
 
   def order_quantity(order)
-    # OrderItem.where(item_id: self, order_id: order.id).first.quantity
     order_items.where(order_id: order.id).first.quantity
   end
 
@@ -62,7 +61,10 @@ class Item < ApplicationRecord
   end
 
   def reviewable?(user_id)
-    user = User.find(user_id)
-    user.ratings.where(item_id: self.id).count < orders.where(status: :shipped).where(user_id: user.id).count
+    ratings.where(user_id: user_id).count < orders.where(status: :shipped).where(user_id: user_id).count
+  end
+
+  def average_rating
+    ratings.average(:rating).round(2)
   end
 end
