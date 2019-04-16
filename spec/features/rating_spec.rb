@@ -4,7 +4,7 @@ RSpec.describe 'rating CRUD' do
   before :each do
     @u4 = User.create(name: "Sibbie Cromett",street_address: "0 Towne Avenue",city: "Birmingham",state: "Alabama",zip_code: "35211",email_address: "scromett3@github.io",password:"fEFJeHdT1K", enabled: true, role:1)
     @u8 = User.create(name: "Tonya Baldock",street_address: "5 Bellgrove Crossing",city: "Yakima",state: "Washington",zip_code: "98902",email_address: "tbaldock7@wikia.com",password:"GN2dr6VfS", enabled: true, role:1)
-    @u17 = User.create(name: "Leanor Dencs",street_address: "1 Cody Lane",city: "Reno",state: "Nevada",zip_code: "89502",email_address: "ldencsg@mozilla.com",password:"KPI7nrZoA", enabled: true, role:0)
+    @u17 = User.create(name: "Leanor Dencs",street_address: "1 Cody Lane",city: "Reno",state: "Nevada",zip_code: "89502",email_address: "ldencsg@mozilla.com",password:"KPI7nrZoA", enabled: true, role:0, slug: "ldencsg-mozilla-com")
     allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(@u17)
 
 
@@ -55,12 +55,78 @@ RSpec.describe 'rating CRUD' do
     click_button "Create Rating"
 
     visit item_path(@i1)
-    save_and_open_page
-    within first ".rating-card" do
+    within first ".order-card" do
       expect(page).to have_content("It's fine")
       expect(page).to have_content("It might grow on me")
       expect(page).to have_content("Rating: 3/5")
     end
+  end
+
+  describe "we see average rating for an item" do
+    it "on the item index page" do
+      Rating.create(title: "this is fine", description: "I prefer vodka", rating: 3, user_id: @u17.id, item_id: @i1.id)
+      Rating.create(title: "acquired taste", description: "it grows on you", rating: 4, user_id: @u17.id, item_id: @i1.id)
+
+      visit items_path
+      within "##{@i1.slug}" do
+        expect(page).to have_content("Average Rating: #{@i1.average_rating}")
+      end
+    end
+    it "on the item show page" do
+      Rating.create(title: "this is fine", description: "I prefer vodka", rating: 3, user_id: @u17.id, item_id: @i1.id)
+      Rating.create(title: "acquired taste", description: "it grows on you", rating: 4, user_id: @u17.id, item_id: @i1.id)
+
+      visit item_path(@i1)
+      within ".info-container" do
+        expect(page).to have_content("Average Rating: #{@i1.average_rating}")
+      end
+    end
+  end
+
+  it "allows a user to see all of their ratings" do
+    r1 = Rating.create(title: "this is fine", description: "I prefer vodka", rating: 3, user_id: @u17.id, item_id: @i1.id)
+    r2 = Rating.create(title: "acquired taste", description: "it grows on you", rating: 4, user_id: @u17.id, item_id: @i1.id)
+
+    visit profile_path
+    click_link "My Reviews"
+    expect(current_path).to eq(profile_ratings_path)
+    within first ".order-card" do
+      expect(page).to have_content("Title: #{r1.title}")
+      expect(page).to have_content("Body: #{r1.description}")
+      expect(page).to have_content("Your Rating: #{r1.rating}/5")
+    end
+  end
+
+  it "allows a user to edit ratings" do
+    r1 = Rating.create(title: "this is fine", description: "I prefer vodka", rating: 3, user_id: @u17.id, item_id: @i1.id)
+    r2 = Rating.create(title: "acquired taste", description: "it grows on you", rating: 4, user_id: @u17.id, item_id: @i1.id)
+    visit profile_ratings_path
+
+    within first ".order-card" do
+      click_link "Edit Review"
+    end
+    expect(current_path).to eq(edit_profile_rating_path(r1))
+
+    fill_in "Title", with: "Yup, it's whiskey"
+    click_button "Update Rating"
+
+    expect(current_path).to eq(profile_ratings_path)
+
+    expect(page).to have_content("Your review has been edited!")
+    expect(Rating.first.title).to eq("Yup, it's whiskey")
+  end
+
+  it "allows a user to delete ratings" do
+    r1 = Rating.create(title: "this is fine", description: "I prefer vodka", rating: 3, user_id: @u17.id, item_id: @i1.id)
+    r2 = Rating.create(title: "acquired taste", description: "it grows on you", rating: 4, user_id: @u17.id, item_id: @i1.id)
+    visit profile_ratings_path
+
+    within first ".order-card" do
+      click_link "Delete Review"
+    end
+
+    expect(page).to have_content("Your review has been deleted!")
+    expect(Rating.first.title).to eq("acquired taste")
   end
 
 end
