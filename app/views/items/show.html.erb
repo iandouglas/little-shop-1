@@ -20,8 +20,21 @@
         <% if !current_admin? && !current_merchant? %>
           <%= button_to "Add to Cart", carts_path(item_id: @item.id) %>
         <% end %>
-
       </section>
+      <% @item.ratings.each do |rating| %>
+        <section class="rating-card">
+        <h4><%= rating.title %></h4>
+        <p><%= rating.description %></p>
+        <p><%= rating.reviewer_name %></p>
+        <p>Rating: <%= rating.rating %>/5</p>
+        <p>Created on: <%= rating.created_at %></p>
+        <% if rating.edited? %>
+          <p><%= rating.updated_at %></p>
+        <% end %>
+      <% end %>
+
+
+
     </div>
   </div>
 </div>

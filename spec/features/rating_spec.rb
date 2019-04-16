@@ -55,6 +55,7 @@ RSpec.describe 'rating CRUD' do
     click_button "Create Rating"
 
     visit item_path(@i1)
+    save_and_open_page
     within first ".rating-card" do
       expect(page).to have_content("It's fine")
       expect(page).to have_content("It might grow on me")

@@ -31,21 +31,6 @@ class Item < ApplicationRecord
     all.where(id: [merchant.items.pluck(:id)])
   end
 
-  def self.merchant_popular_states
-  end
-
-  def self.merchant_popular_city_states
-  end
-
-  def self.merchant_most_orders_user
-  end
-
-  def self.merchant_most_items_user
-  end
-
-  def self.merchant_most_money_spent_user
-  end
-
   def avg_fulfill_time
     if OrderItem.where(item_id: self.id, "order_items.fulfilled": true).first
       OrderItem.where(item_id: self.id, "order_items.fulfilled": true).group(:item_id).pluck("AVG(updated_at - created_at)")
