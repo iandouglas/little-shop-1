@@ -13,10 +13,6 @@ class RatingsController < ApplicationController
     end
   end
 
-  def index
-  end
-
-
   private
 
   def rating_params

@@ -29,6 +29,8 @@
     </div>
     <% if item.reviewable?(@order.user_id) %>
       <%= link_to "Leave Review", new_rating_path(user_id: @order.user_id, item_id: item.id) %>
+    <% else %>
+      Order more to review this item again!
     <% end %>
   </div>
   <% end %>
