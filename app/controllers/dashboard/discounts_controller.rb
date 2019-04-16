@@ -30,6 +30,10 @@ class Dashboard::DiscountsController < Dashboard::BaseController
     end
   end
 
+  def destroy
+    Discount.destroy(params[:id])
+  end
+
   private
 
   def discount_params

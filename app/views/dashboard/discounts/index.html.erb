@@ -5,5 +5,6 @@
     Discount: <%= discount.view_percentage %>%
     Quantity threshold: <%= discount.min_quantity %>
     <%= button_to "Edit Discount", edit_dashboard_discount_path(discount) %>
+    <%= button_to "Delete Discount", dashboard_discount_path(discount), method: :delete %>
   </div>
   <% end %>
