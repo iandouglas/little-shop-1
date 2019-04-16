@@ -25,13 +25,18 @@
 
 <div class="items-container">
   <% @items.each do |item| %>
-    <div class="item-card">
+    <div class="item-card" id=<%=item.slug%>>
       <h2><%= link_to item.item_name, item_path(item) %></h2>
       <a href="<%=item_path(item)%>"><img src=<%= item.image_url %> class="medium-image" alt="image of <%= item.item_name %>"></a>
       <br>
       <p>Merchant: <%= item.merchant_name %></p>
       <p>In Inventory: <%= item.inventory %></p>
       <p>Price: <%= number_to_currency(item.current_price.round(2)) %></p>
+      <% if item.ratings.first %>
+        <p>Average Rating: <%= item.average_rating %>/5</p>
+      <% else %>
+        <p>This item not yet rated!</p>
+      <% end %>
     </div>
   <% end %>
 </div>

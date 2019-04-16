@@ -4,6 +4,7 @@ RSpec.describe User, type: :model do
   describe "Relationships" do
     it {should have_many :items}
     it {should have_many :orders}
+    it {should have_many :ratings}
   end
 
   describe "Class methods" do
@@ -20,13 +21,6 @@ RSpec.describe User, type: :model do
       end
     end
   end
-
-  # describe "instance methods" do
-  #   it 'can create slugs' do
-  #     u1 = User.create(name: "Ondrea Chadburn",street_address: "6149 Pine View Alley",city: "Wichita Falls",state: "Texas",zip_code: "76301",email_address: "ochadburn0@washingtonpost.com",password:"EKLr4gmM44", enabled: true, role:1)
-  #     expect(u1.create_slug(u1.email_address)).to eq ("ochadburn0-washingtonpost-com")
-  #   end
-  # end
 
   describe "Merchant methods" do
     before :each do
