@@ -12,6 +12,8 @@ Rails.application.routes.draw do
 
   resources :carts, only: [:create, :edit]
 
+  resources :ratings, only: [:new, :create]
+
 
   get '/login', to: "sessions#new"
   post '/login', to: "sessions#create"

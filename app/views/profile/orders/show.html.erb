@@ -27,7 +27,9 @@
       <br>
       Subtotal: <%= number_to_currency(item.subtotal(@order)) %>
     </div>
-
+    <% if item.reviewable?(@order.user_id) %>
+      <%= link_to "Leave Review", new_rating_path(user_id: @order.user_id, item_id: item.id) %>
+    <% end %>
   </div>
   <% end %>
 </div>
