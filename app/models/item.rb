@@ -61,4 +61,14 @@ class Item < ApplicationRecord
     new_inventory = self.inventory - order.order_items.where(item_id: self.id).first.quantity
     update(inventory: new_inventory)
   end
+
+  def max_eligible_discount(quantity)
+    discounts.max do |discount|
+      quantity <=> discount.min_quantity
+    end
+  end
+
+  def qualify_for_discount?(quantity)
+    discounts.any? && quantity >= discounts.minimum(:min_quantity)
+  end
 end

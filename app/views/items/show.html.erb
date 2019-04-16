@@ -15,6 +15,11 @@
         <% else %>
           <h4>Usually ships in <%= @item.avg_fulfill_time[0].split(" ")[0,2].join(" ") %></h4>
         <% end %>
+        <% if @item.discounts.any? %>
+          <% @item.discounts.each do |discount| %>
+          <h4><%= discount.view_percentage %>% off when you buy <%= discount.min_quantity %></h4>
+          <% end %>
+        <% end %>
       </section>
       <section class="button-section">
         <% if !current_admin? && !current_merchant? %>
