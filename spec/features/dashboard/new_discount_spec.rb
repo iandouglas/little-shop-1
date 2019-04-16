@@ -17,24 +17,28 @@ RSpec.describe 'As a merchant' do
     @o39 = @u34.orders.create(status: 2)
     @oi171 = OrderItem.create(order_id: @o39.id,item_id: @i19.id, quantity: 7,fulfilled: false,order_price: 53.0,created_at: "2018-04-07 22:05:50",updated_at: "2018-04-17 08:47:14")
   end
-  context 'when I visit my dashboard' do
-    it 'has a link to create a bulk discount' do
-      visit dashboard_path
-      expect(page).to have_link("Bulk Discounts")
-    end
-  end
-  context 'when I visit my discounts index' do
-    it 'lists all of my current discounts' do
-      visit dashboard_discounts_path
-      expect(page).to have_content("Item: #{@d1.item.item_name}")
-      expect(page).to have_content("Discount: #{(@d1.percentage * 100).to_i}%")
-      expect(page).to have_content("Quantity threshold: #{@d1.min_quantity}")
+  context 'when I visit the new discount page' do
+    it "I can fill in the form and create a new discount" do
+      visit new_dashboard_discount_path
+
+      fill_in "Item", with: "#{@i23.id}"
+      fill_in "Percentage", with: "10"
+      fill_in "Threshold quantity", with: "10"
+
+      click_button "Create Discount"
+
+      expect(current_path).to eq(dashboard_discounts_path)
+      expect(page).to have_content("Item: #{@i23.item_name}")
+      expect(page).to have_content("Discount: 10%")
+      expect(page).to have_content("Quantity threshold: 10")
     end
 
-    it "should have a link to add a new discount" do
-      visit dashboard_discounts_path
-
-      expect(page).to have_link("Add Discount")
+    it "has all my items names and ids for reference" do
+      visit new_dashboard_discount_path
+      expect(page).to have_content("#{@i19.item_name}")
+      expect(page).to have_content("#{@i19.id}")
+      expect(page).to have_content("#{@i23.item_name}")
+      expect(page).to have_content("#{@i23.id}")
     end
   end
 end

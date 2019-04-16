@@ -41,6 +41,10 @@ class User < ApplicationRecord
     (total_quantity_sold / (total_inventory + total_quantity_sold).to_f) * 100
   end
 
+  def my_discounts
+    Discount.where(item_id: self.items).order(:item_id, :percentage)
+  end
+
   def self.top_three_states(merchant)
     joins(orders: :order_items).select(:state,"SUM(order_items.quantity)").where("order_items.fulfilled": true, "order_items.item_id": merchant.items.ids).group(:state).order("sum(order_items.quantity) DESC").limit(3)
   end
@@ -86,4 +90,5 @@ class User < ApplicationRecord
   def self.three_biggest_orders
     x = joins(orders: :order_items).where("order_items.fulfilled": true).select("orders.id", "sum(order_items.quantity)").group("orders.id").order("sum(order_items.quantity) DESC").limit(3)
   end
+
 end

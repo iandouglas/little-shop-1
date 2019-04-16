@@ -1,0 +1,20 @@
+<div class="welcome-login">
+  <%= form_for @discount, url: {action: "create"} do |f| %>
+  <%= f.error_messages %>
+
+  <%= f.label :item_id %>
+  <%= f.number_field :item_id, :required => true %>
+
+  <%= f.label :percentage %>
+  <%= f.number_field :percentage, :required => true %>
+
+  <%= f.label :min_quantity, "Threshold quantity" %>
+  <%= f.number_field :min_quantity, :required => true %>
+
+  <%= f.submit %>
+
+  <% end %>
+</div>
+<% @items.each do |item| %>
+  <%= item.id %> : <%= item.item_name %>
+<% end %>

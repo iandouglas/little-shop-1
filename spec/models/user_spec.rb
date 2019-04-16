@@ -36,6 +36,10 @@ RSpec.describe User, type: :model do
       @i44 = @umerch.items.create(item_name: "Etched Globe Whiskey Glasses",image_url: "https://www.totalwine.com/media/sys_master/twmmedia/h2b/hde/8876890587166.png",current_price: 30.0,inventory: 44, description:"A sure conversation starter, the decorative etching of the world map brings a new spin on serving spirits.",enabled: true)
       @i23 = @umerch2.items.create(item_name: "Belle Meade Cask Strength Reserve",image_url: "http://s3.amazonaws.com/mscwordpresscontent/wa/wp-content/uploads/2018/11/Belle-Meade-Cask-Strength.png",current_price: 60.0,inventory: 36, description:"Tennessee- A blend of single barrel bourbons making each batch slightly different. Aged for 7-11 years. Flavors of vanilla, caramel, spice, and stone fruits. Try it neat or on the rocks.",enabled: true)
 
+      @d1 = @i39.discounts.create!(percentage: 0.10, min_quantity: 5)
+      @d2 = @i39.discounts.create!(percentage: 0.05, min_quantity: 15)
+      @d3 = @i44.discounts.create!(percentage: 0.15, min_quantity: 30)
+
       @o39 = @u4.orders.create(status: 2)
       @o49 = @u4.orders.create(status: 0)
       @o59 = @u4.orders.create(status: 0)
@@ -108,6 +112,12 @@ RSpec.describe User, type: :model do
         expect(User.top_users_by_revenue(@umerch).first.name).to eq(@u4.name)
         expect(User.top_users_by_revenue(@umerch).first.sum).to eq(742.0)
       end
-    end    
+    end
+
+    describe ".my_discounts" do
+      it "should return a particular merhcant's discounts" do
+        expect(@umerch.my_discounts).to eq([@d2, @d1, @d3])
+      end
+    end
   end
 end
