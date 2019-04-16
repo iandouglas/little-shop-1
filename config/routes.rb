@@ -26,6 +26,7 @@ Rails.application.routes.draw do
 
   namespace :profile do
     resources :orders, only: [:index, :show, :update, :create]
+    resources :ratings, only: [:index, :edit, :update, :destroy]
   end
 
   namespace :dashboard do
