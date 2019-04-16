@@ -1,7 +1,7 @@
 <% @orders.each do |order| %>
   <div class="admin-order-card">
     <h4>Order ID: <%= order.id %></h4>
-    <%= link_to "Ordered by: #{order.user_name}", admin_user_path(order.user_id) %>
+    <%= link_to "Ordered by: #{order.user_name}", admin_user_path(order.user.slug) %>
     <div class="order-info">
       <p>Created at: <%= order.created_at %></p>
       <p>status: <%= order.status %></p>

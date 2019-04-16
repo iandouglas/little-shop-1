@@ -73,4 +73,10 @@ RSpec.describe Order, type: :model do
     end
   end
 
+  describe ".shipped?" do
+    it "returns a boolean based on whether the order has shipped" do
+      expect(@o3.shipped?).to eq(false)
+    end
+  end
+
 end

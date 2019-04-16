@@ -1,0 +1,19 @@
+<div class="order-container">
+  <h2 class="heading">My Reviews:</h2>
+  <div class="orders-container">
+  <% @ratings.each do |rating| %>
+  <div class="order-card">
+    <p>Item: <%= rating.item_name %></p>
+    <p>Title: <%= rating.title %></p>
+    <p>Body: <%= rating.description %></p>
+    <p>Your Rating: <%= rating.rating %>/5</p>
+    <p>Created At: <%= rating.created_at %></p>
+    <% if rating.edited? %>
+    <p>Updated At: <%= rating.updated_at %></p>
+    <% end %>
+    <%= link_to "Edit Review", edit_profile_rating_path(rating) %>
+    <%= link_to "Delete Review", profile_rating_path(rating), method: :delete %>
+  </div>
+  <% end %>
+  </div>
+</div>

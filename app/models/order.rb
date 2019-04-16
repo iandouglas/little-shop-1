@@ -29,5 +29,9 @@ class Order < ApplicationRecord
     user.name
   end
 
+  def shipped?
+    status == "shipped"
+  end
+
 
 end

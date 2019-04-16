@@ -2,15 +2,15 @@ require "rails_helper"
 
 RSpec.describe "As an admin who is logged in" do
   before :each do
-    @uadmin = User.create!(name: "Darnell Topliss",street_address: "02 Monument Street",city: "Lincoln",state: "Nebraska",zip_code: "68515",email_address: "dtopliss6@unicef.org",password:"usJn1CuUB", enabled: true, role:2)
+    @uadmin = User.create!(name: "Darnell Topliss",street_address: "02 Monument Street",city: "Lincoln",state: "Nebraska",zip_code: "68515",email_address: "dtopliss6@unicef.org",password:"usJn1CuUB", enabled: true, role:2, slug: "dtopliss6-unicef-org")
 
-    @umerch = User.create(name: "Ondrea Chadburn",street_address: "6149 Pine View Alley",city: "Wichita Falls",state: "Texas",zip_code: "76301",email_address: "ochadburn0@washingtonpost.com",password:"EKLr4gmM44", enabled: true, role:1)
-    @umerch2 = User.create(name: "Raff Faust",street_address: "066 Debs Place",city: "El Paso",state: "Texas",zip_code: "79936",email_address: "rfaust1@naver.com",password:"ZCoxai", enabled: true, role:1)
+    @umerch = User.create(name: "Ondrea Chadburn",street_address: "6149 Pine View Alley",city: "Wichita Falls",state: "Texas",zip_code: "76301",email_address: "ochadburn0@washingtonpost.com",password:"EKLr4gmM44", enabled: true, role:1, slug: "ochadburn0-washingtonpost-com")
+    @umerch2 = User.create(name: "Raff Faust",street_address: "066 Debs Place",city: "El Paso",state: "Texas",zip_code: "79936",email_address: "rfaust1@naver.com",password:"ZCoxai", enabled: true, role:1, slug: "rfaust1-naver-com")
     allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(@umerch2)
 
-    @u1 = User.create(name: "Con Chilver",street_address: "16455 Miller Circle",city: "Van Nuys",state: "California",zip_code: "91406",email_address: "cchilver2@mysql.com",password:"IrGmrINsmr9e", enabled: true, role:0)
-    @u4 = User.create(name: "Sibbie Cromett",street_address: "0 Towne Avenue",city: "Birmingham",state: "Alabama",zip_code: "35211",email_address: "scromett3@github.io",password:"fEFJeHdT1K", enabled: true, role:0)
-    @u8 = User.create(name: "Tonya Baldock",street_address: "5 Bellgrove Crossing",city: "Yakima",state: "Washington",zip_code: "98902",email_address: "tbaldock7@wikia.com",password:"GN2dr6VfS", enabled: true, role:0)
+    @u1 = User.create(name: "Con Chilver",street_address: "16455 Miller Circle",city: "Van Nuys",state: "California",zip_code: "91406",email_address: "cchilver2@mysql.com",password:"IrGmrINsmr9e", enabled: true, role:0, slug: "cchilver2-mysql-com")
+    @u4 = User.create(name: "Sibbie Cromett",street_address: "0 Towne Avenue",city: "Birmingham",state: "Alabama",zip_code: "35211",email_address: "scromett3@github.io",password:"fEFJeHdT1K", enabled: true, role:0, slug: "scromett3-github-io")
+    @u8 = User.create!(name: "Tonya Baldock",street_address: "5 Bellgrove Crossing",city: "Yakima",state: "Washington",zip_code: "98902",email_address: "tbaldock7@wikia.com",password:"GN2dr6VfS", enabled: true, role:0, slug: "tbaldock7-wikia-com")
 
     @i39 = @umerch.items.create(item_name: "Tovolo King Cube Tray",image_url: "https://www.totalwine.com/dynamic/490x/media/sys_master/twmmedia/hc7/h7c/11374503362590.png",current_price: 9.0,inventory: 40, description:"Ice cubes, squared. These larger-than-normal ice cubes add a little special pizazz to a drink on the rocks. The silicone tray makes for easy removal of the cubes so that they won't shatter or crack. Cheers!",enabled: true)
     @i44 = @umerch.items.create(item_name: "Etched Globe Whiskey Glasses",image_url: "https://www.totalwine.com/media/sys_master/twmmedia/h2b/hde/8876890587166.png",current_price: 30.0,inventory: 44, description:"A sure conversation starter, the decorative etching of the world map brings a new spin on serving spirits.",enabled: true)
@@ -122,7 +122,6 @@ RSpec.describe "As an admin who is logged in" do
     it "should show me the merchant's statistics" do
       visit admin_merchant_path(@umerch)
       expect(page).to have_css(".statistics")
-      #MORE TESTS!!
     end
 
     it "should show me the merchant's unfulfilled orders" do
@@ -136,28 +135,18 @@ RSpec.describe "As an admin who is logged in" do
       end
     end
 
-    describe "on a merchants show page" do
-      it "should show me the downgrade to user button" do
-        visit admin_merchant_path(@umerch)
-        expect(page).to have_link('Downgrade to User')
-      end
 
-      it "should redirect me to user profile page" do
-        visit admin_merchant_path(@umerch)
-        click_link "Downgrade to User"
-        expect(current_path).to eq(admin_user_path(@umerch))
-      end
+    it "should show me the downgrade to user button" do
+      visit admin_merchant_path(@umerch)
+      expect(page).to have_link('Downgrade to User')
     end
 
-    # it "should link me to the order page via the order id" do
-    #   #did I make this up?
-    #  Extension 60?
-    #   visit admin_merchant_path(@umerch)
-    #   within first ".order-card" do
-    #     click_link "Order: #{@o49.id}"
-    #     expect(current_path).to eq(dashboard_orders_path(@o49)) #maybe?
-    #   end
-    # end
+    it "should redirect me to user profile page" do
+      visit admin_merchant_path(@umerch)
+      click_link "Downgrade to User"
+      expect(current_path).to eq(admin_user_path(@umerch))
+    end
+  end
 
 
   describe 'when I visit my dashboard page' do
@@ -169,7 +158,7 @@ RSpec.describe "As an admin who is logged in" do
         expect(page).to have_content("status: #{@o49.status}")
       end
 
-      within all(".admin-order-card").last
+      within all(".admin-order-card").last do
       expect(page).to have_content("Order ID: #{@o39.id}")
       expect(page).to have_link("#{@u4.name}")
       expect(page).to have_content("status: #{@o39.status}")
@@ -199,4 +188,20 @@ RSpec.describe "As an admin who is logged in" do
       expect(current_path).to eq(admin_user_path(@u8))
     end
   end
+
+  describe 'merchant and user show URIs now contain slugs rather than ids' do
+    it 'check user show link' do
+      visit admin_dashboard_path(@uadmin)
+      click_link "#{@u8.name}"
+      expect(current_path).to eq("/admin/users/#{@u8.slug}")
+    end
+
+    it 'check merchant show link' do
+      visit admin_merchants_path
+      click_link "#{@umerch.name}"
+      expect(current_path).to eq("/admin/merchants/#{@umerch.slug}")
+    end
+  end
+
+  
 end

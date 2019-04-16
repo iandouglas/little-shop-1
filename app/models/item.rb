@@ -2,9 +2,14 @@ class Item < ApplicationRecord
   belongs_to :user
   has_many :order_items
   has_many :orders, through: :order_items
+  has_many :ratings
 
   validates :inventory, numericality: { greater_than_or_equal_to: 0 }
   validates :current_price, format: { with: /\A\d+(?:\.\d{0,2})?\z/ }, numericality: { greater_than: 0 }
+
+  def to_param
+    slug
+  end
 
   def merchant_name
     User.where(id: self.user_id).first.name
@@ -24,21 +29,6 @@ class Item < ApplicationRecord
 
   def self.merchant_items(merchant)
     all.where(id: [merchant.items.pluck(:id)])
-  end
-
-  def self.merchant_popular_states
-  end
-
-  def self.merchant_popular_city_states
-  end
-
-  def self.merchant_most_orders_user
-  end
-
-  def self.merchant_most_items_user
-  end
-
-  def self.merchant_most_money_spent_user
   end
 
   def avg_fulfill_time
@@ -62,12 +52,19 @@ class Item < ApplicationRecord
   end
 
   def order_quantity(order)
-    # OrderItem.where(item_id: self, order_id: order.id).first.quantity
     order_items.where(order_id: order.id).first.quantity
   end
 
   def update_inventory(order)
     new_inventory = self.inventory - order.order_items.where(item_id: self.id).first.quantity
     update(inventory: new_inventory)
+  end
+
+  def reviewable?(user_id)
+    ratings.where(user_id: user_id).count < orders.where(status: :shipped).where(user_id: user_id).count
+  end
+
+  def average_rating
+    ratings.average(:rating).round(2)
   end
 end

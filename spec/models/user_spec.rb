@@ -4,6 +4,7 @@ RSpec.describe User, type: :model do
   describe "Relationships" do
     it {should have_many :items}
     it {should have_many :orders}
+    it {should have_many :ratings}
   end
 
   describe "Class methods" do
@@ -108,6 +109,6 @@ RSpec.describe User, type: :model do
         expect(User.top_users_by_revenue(@umerch).first.name).to eq(@u4.name)
         expect(User.top_users_by_revenue(@umerch).first.sum).to eq(742.0)
       end
-    end    
+    end
   end
 end

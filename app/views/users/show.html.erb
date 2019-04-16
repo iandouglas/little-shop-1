@@ -7,10 +7,15 @@
     <p>State: <%= current_user.state %></p>
     <p>Zip Code: <%= current_user.zip_code %></p>
     <p>Email Address: <%= current_user.email_address %></p>
-    <%= link_to "Edit Profile", edit_user_path(current_user), id: "button" %>
+    <%= link_to "Edit Profile", edit_user_path(current_user.slug), id: "button" %>
+
     <% if current_user.orders.first %>
     <%= link_to "My Orders", profile_orders_path, class: "browse-button" %>
     <% end %>
-    <% else redirect_to "/public/404" %>
+
+    <% if current_user.ratings.first %>
+    <%= link_to "My Reviews", profile_ratings_path, class: "browse-button" %>
+    <% end %>
+  <% else redirect_to "/public/404" %>
   </div>
 <% end %>

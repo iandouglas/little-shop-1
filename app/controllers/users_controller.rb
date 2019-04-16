@@ -1,6 +1,7 @@
 class UsersController < ApplicationController
 before_action :require_user
 skip_before_action :require_user, only: [:new, :create]
+
   def new
     @user = User.new
   end
@@ -20,7 +21,7 @@ skip_before_action :require_user, only: [:new, :create]
   end
 
   def edit
-    @user = User.find(params[:id])
+    @user = User.find_by_slug(params[:slug])
   end
 
   def update
@@ -35,6 +36,7 @@ skip_before_action :require_user, only: [:new, :create]
   private
 
   def user_params
+    create_slug(params)
     params.require(:user).permit(:name,
                                  :street_address,
                                  :state,
@@ -42,10 +44,12 @@ skip_before_action :require_user, only: [:new, :create]
                                  :zip_code,
                                  :email_address,
                                  :password,
-                                 :password_confirmation)
+                                 :password_confirmation,
+                                 :slug)
   end
 
   def update_params
+    create_slug(params) unless params[:user][:email_address].blank?
     up = params.require(:user).permit(:name,
                                  :street_address,
                                  :state,
@@ -53,10 +57,11 @@ skip_before_action :require_user, only: [:new, :create]
                                  :zip_code,
                                  :email_address,
                                  :password,
-                                 :password_confirmation)
-     up.delete(:password) if up[:password].blank?
-     up.delete(:password_confirmation) if up[:password_confirmation].blank?
-     up
+                                 :password_confirmation,
+                                 :slug)
+    up.delete(:password) if up[:password].blank?
+    up.delete(:password_confirmation) if up[:password_confirmation].blank?
+    up
   end
 
   def require_user

@@ -9,7 +9,8 @@ RSpec.describe 'logout workflow' do
                       zip_code: 80202,
                       email_address: "Jeremy@test_user.com",
                       password: "test",
-                      enabled: true)
+                      enabled: true,
+                      slug: "Jeremy-test_user-com")
   end
 
   it "can logout a registered user" do

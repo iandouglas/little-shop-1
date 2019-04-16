@@ -8,6 +8,11 @@
         <h4>Sold by: <%= @item.merchant_name %></h4>
         <h4><%= @item.inventory %> left in stock</h4>
         <h4><%= number_to_currency(@item.current_price) %></h4>
+        <% if @item.ratings.first %>
+          <h4>Average Rating: <%= @item.average_rating %>/5</h4>
+        <% else %>
+          <h4>This item not yet rated!</h4>
+        <% end %>
         <% if @item.avg_fulfill_time == 1 %>
         <h4>Usually ships in 1 day.</h4>
         <% elsif @item.avg_fulfill_time[0] == "n" %>
@@ -20,8 +25,22 @@
         <% if !current_admin? && !current_merchant? %>
           <%= button_to "Add to Cart", carts_path(item_id: @item.id) %>
         <% end %>
-
       </section>
     </div>
   </div>
+</div>
+<div class="ratings-container">
+  <h3>Ratings</h3>
+  <% @item.ratings.each do |rating| %>
+    <section class="order-card">
+    <h4><%= rating.title %></h4>
+    <p><%= rating.description %></p>
+    <p><%= rating.reviewer_name %></p>
+    <p>Rating: <%= rating.rating %>/5</p>
+    <p>Created on: <%= rating.created_at %></p>
+    <% if rating.edited? %>
+      <p>Edited on:<%= rating.updated_at %></p>
+    <% end %>
+    </section>
+  <% end %>
 </div>

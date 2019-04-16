@@ -6,7 +6,8 @@ class ApplicationController < ActionController::Base
   helper_method :current_user,
                 :current_user?,
                 :current_merchant?,
-                :current_admin?
+                :current_admin?,
+                :create_slug
 
   before_action :set_cart
 
@@ -29,4 +30,17 @@ class ApplicationController < ActionController::Base
   def set_cart
     @cart ||= Cart.new(session[:cart])
   end
+
+  def create_slug(params)
+    params[:user][:slug] = params[:user][:email_address].parameterize
+  end
+
+  def create_item_slug(params)
+    if Item.find_by_item_name(params[:item_name])
+      params[:slug] = (params[:item_name]+rand(100..999).to_s).parameterize
+    else
+      params[:slug] = params[:item_name].parameterize
+    end
+  end
+
 end
