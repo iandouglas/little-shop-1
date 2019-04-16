@@ -24,7 +24,14 @@ class Cart
   end
 
   def subtotal(item)
-    @contents[item.id.to_s] * item.current_price
+    quantity = @contents[item.id.to_s]
+    if item.qualify_for_discount?(quantity)
+      biggest_eligible_dc = item.max_eligible_discount(quantity)
+      st = (quantity * item.current_price ) * (1 - biggest_eligible_dc.percentage)
+    else
+      st = quantity * item.current_price
+    end
+    st
   end
 
   def cart_total

@@ -1,44 +1,74 @@
-Bulk Discounts
+{\rtf1\ansi\ansicpg1252\cocoartf1671\cocoasubrtf200
+{\fonttbl\f0\fnil\fcharset0 HelveticaNeue;\f1\fmodern\fcharset0 CourierNewPS-BoldMT;}
+{\colortbl;\red255\green255\blue255;\red157\green220\blue47;\red0\green0\blue53;\red188\green42\blue29;
+\red50\green184\blue32;\red49\green178\blue191;}
+{\*\expandedcolortbl;;\cspthree\c71340\c86743\c35137;\cspthree\c0\c1566\c25907\c79897;\cssrgb\c79126\c24275\c14517;
+\cssrgb\c22301\c75372\c16675;\cssrgb\c22220\c74607\c79618;}
+\margl1440\margr1440\vieww10800\viewh8400\viewkind0
+\deftab560
+\pard\pardeftab560\slleading20\partightenfactor0
 
-As a merchant
-When I visit one of my item pages
-I see a link to turn on bulk discounts
-When I click that link I am taken to a bulk discounts form
-When I fill in the form and click submit
-A flash message tells me that I have activated bulk discounts for that item
-Any user that orders that item now has a discount of the type I specified if ordering over the minimum quantity
-And that link changes to turn off bulk discounts
-When I click turn off bulk discounts
-Pricing for that item reverts back to normal
+\f0\fs24 \cf0 Bulk Discount User Stories\
+\pard\pardeftab560\slleading20\pardirnatural\partightenfactor0
+\cf0 \
+\pard\pardeftab560\slleading20\partightenfactor0
+\cf0 As a merchant\
+When I visit the edit item form\
+I see all the previously required item attributes\
+And a field to specify a bulk discount\
+A flash message tells me that I have activated bulk discounts for that item\
+Any user that orders that item now has a discount of the type I specified if ordering over the minimum quantity\
+And that link changes to turn off bulk discounts\
+When I click turn off bulk discounts\
+Pricing for that item reverts back to normal\
+\pard\pardeftab560\slleading20\pardirnatural\partightenfactor0
+\cf0 \
+\pard\pardeftab560\slleading20\partightenfactor0
+\cf0 As a user\
+When I visit an item eligible for a bulk discount\
+I see a description of the discount\
+When I add a discounted item to my cart\
+And visit my cart\
+And adjust the quantity to meet the bulk discount requirement\
+I see an updated subtotal that reflects my bulk discount\
+Any other items are not affected by the discount\
+\pard\pardeftab560\slleading20\pardirnatural\partightenfactor0
+\cf0 \
+\
+\pard\pardeftab560\slleading20\partightenfactor0
+\cf0 Charts User Stories\
+\pard\pardeftab560\slleading20\pardirnatural\partightenfactor0
+\cf0 \
+\pard\pardeftab560\slleading20\partightenfactor0
+\cf0 As a merchant\
+When I visit my dashboard page\
+I see a line graph or bar chart of my total revenue by month for up to 12 months\
+I see a pie chart of the total percentage of my inventory sold\
+I see a pie chart for the top 3 states and top 3 cities\
+\pard\pardeftab560\slleading20\pardirnatural\partightenfactor0
+\cf0 \
+\pard\pardeftab560\slleading20\partightenfactor0
+\cf0 As any type of user\
+When I visit the merchants index page\
+I see a pie chart of merchants and their total share of sales site wide\
+\pard\pardeftab560\slleading20\pardirnatural\partightenfactor0
+\cf0 \
+\pard\pardeftab560\slleading20\partightenfactor0
+\cf0 As any type of user\
+When I visit the items index page\
+I see a bar graph for the most popular items site wide\
+And a bar graph for the least popular items site wide\
+\pard\pardeftab560\slleading20\pardirnatural\partightenfactor0
+\cf0 \
+\pard\pardeftab560\slleading20\partightenfactor0
+\cf0 As an admin\
+When I visit a merchant\'92s show page\
+I see a bar graph for that merchant\'92s most popular items\
+\
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardirnatural\partightenfactor0
 
-
-As a user
-When I visit an item eligible for a bulk discount
-I see a description of the discount
-When I add a discounted item to my cart
-And visit my cart
-And adjust the quantity to meet the bulk discount requirement
-I see an updated subtotal that reflects my bulk discount
-Any other items are not affected by the discount
-
-
-Charts
-
-As a merchant
-When I visit my dashboard page
-I see a line graph or bar chart of my total revenue by month for up to 12 months
-I see a pie chart of the total percentage of my inventory sold
-I see a pie chart for the top 3 states and top 3 cities
-
-As any type of user
-When I visit the merchants index page
-I see a pie chart of merchants and their total share of sales site wide
-
-As any type of user
-When I visit the items index page
-I see a bar graph for the most popular items site wide
-And a bar graph for the least popular items site wide
-
-As an admin
-When I visit a merchant's show page
-I see a bar graph for that merchant's most popular items
+\f1\b\fs34 \cf2 \cb3 \CocoaLigature0 1) When I visit the merchant dashboard page click link to edit item should update item information\
+     \cf4 Failure/Error: \cf5 expect\cf2 (page).to have_content(\cf4 "4"\cf2 )\
+     \cf4   expected to find text "4" in "ID: 262\\nBelle Meade Cask Strength Reserve\\nIn Inventory: 36\\nPrice: $65.00\\nEdit Item Enable Item Delete Item"\cf2 \
+     \cf6 # ./spec/features/dashboard_spec.rb:134:in `block (4 levels) in <top (required)>'\cf2 \
+     \cf6 # ./spec/features/dashboard_spec.rb:133:in `block (3 levels) in <top (required)>'}

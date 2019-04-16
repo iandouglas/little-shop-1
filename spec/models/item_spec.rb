@@ -17,6 +17,7 @@ RSpec.describe Item, type: :model do
     # @i9 = @u4.items.create(item_name: "Angel's Envy Kentucky Straight Bourbon finished in Port Wine Barrels",image_url: "https://d256619kyxncpv.cloudfront.net/gui/img/2015/09/17/13/2015091713_angels_envy_bourbon_original.png",current_price: 55.0,inventory: 27, description:"Gold color laced with reddish amber hues, nearly copper in tone. You’ll detect notes of subtle vanilla, raisins, maple syrup and toasted nuts. Vanilla, ripe fruit, maple syrup, toast and bitter chocolate. Clean and lingering sweetness with a hint of Madeira that slowly fades.",enabled: true)
     # @i10 = @u8.items.create(item_name: "Laws Four Grain Straight Bourbon",image_url: "https://static.whiskybase.com/storage/whiskies/6/3/733/177713-normal.png",current_price: 60.0,inventory: 43, description:"Aromas of orange blossom compliment notes of black tea, honey, and dusty pepper on the nose. Flavors of pekoe tea, orange peel, cinnamon, and vanilla custard dominate the palate. Hints of sweet tobacco and spice lead to a rich, dry finish.",enabled: true)
 
+
     @o1 = @u17.orders.create(status: 2)
     @o2 = @u17.orders.create(status: 2)
     @o3 = @u17.orders.create(status: 0)
@@ -34,6 +35,7 @@ RSpec.describe Item, type: :model do
     it {should belong_to :user}
     it {should have_many :order_items}
     it {should have_many :orders}
+    it {should have_many :discounts}
   end
 
   context "items index statistics" do

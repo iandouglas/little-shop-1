@@ -6,11 +6,16 @@ class Profile::OrdersController < ApplicationController
   def create
     new_order = current_user.orders.create(status: "pending")
     session[:cart].each do |item_id, quantity|
-      order_item_price = Item.find(item_id).current_price * quantity
+      item = Item.find(item_id)
+      if item.qualify_for_discount?(quantity)
+        order_item_price = item.current_price * (1 - item.max_eligible_discount(quantity).percentage)
+      else
+        order_item_price = item.current_price
+      end
       OrderItem.create(order_id: new_order.id,
                         item_id: item_id,
                        quantity: quantity,
-                    order_price: order_item_price,)
+                    order_price: order_item_price)
     end
     session.delete(:cart)
     redirect_to profile_orders_path, success: 'Your order was successfully created!'

@@ -1,0 +1,11 @@
+<%= form_for @discount, url: {action: :update} do |f| %>
+
+  <%= f.label :percentage %>
+  <%= f.number_field :percentage %>
+
+  <%= f.label :min_quantity, "Threshold quantity" %>
+  <%= f.number_field :min_quantity %>
+
+  <%= f.submit %>
+
+<% end %>

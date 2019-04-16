@@ -2,12 +2,14 @@ class Item < ApplicationRecord
   belongs_to :user
   has_many :order_items
   has_many :orders, through: :order_items
+  has_many :discounts
 
   validates :inventory, numericality: { greater_than_or_equal_to: 0 }
   validates :current_price, format: { with: /\A\d+(?:\.\d{0,2})?\z/ }, numericality: { greater_than: 0 }
 
-  def merchant_name
-    User.where(id: self.user_id).first.name
+
+  def self.merchant_discounts
+    joins(:discounts).where(user_id: current_user.id).order(:percentage)
   end
 
   def self.popular_five
@@ -26,19 +28,8 @@ class Item < ApplicationRecord
     all.where(id: [merchant.items.pluck(:id)])
   end
 
-  def self.merchant_popular_states
-  end
-
-  def self.merchant_popular_city_states
-  end
-
-  def self.merchant_most_orders_user
-  end
-
-  def self.merchant_most_items_user
-  end
-
-  def self.merchant_most_money_spent_user
+  def merchant_name
+    User.where(id: self.user_id).first.name
   end
 
   def avg_fulfill_time
@@ -69,5 +60,15 @@ class Item < ApplicationRecord
   def update_inventory(order)
     new_inventory = self.inventory - order.order_items.where(item_id: self.id).first.quantity
     update(inventory: new_inventory)
+  end
+
+  def max_eligible_discount(quantity)
+    discounts.max do |discount|
+      quantity <=> discount.min_quantity
+    end
+  end
+
+  def qualify_for_discount?(quantity)
+    discounts.any? && quantity >= discounts.minimum(:min_quantity)
   end
 end
