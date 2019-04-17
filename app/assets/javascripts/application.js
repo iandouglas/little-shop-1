@@ -12,3 +12,7 @@
 //
 //= require rails-ujs
 //= require_tree .
+//= require jquery
+//= require jquery_ujs
+//= require d3
+//= require_tree .
