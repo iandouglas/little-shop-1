@@ -8,7 +8,7 @@ class Profile::OrdersController < ApplicationController
     session[:cart].each do |item_id, quantity|
       item = Item.find(item_id)
       if item.qualify_for_discount?(quantity)
-        order_item_price = item.current_price * (1 - item.max_eligible_discount(quantity).percentage)
+        order_item_price = item.current_price * item.calculation_percentage(quantity)
       else
         order_item_price = item.current_price
       end

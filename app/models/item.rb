@@ -7,11 +7,6 @@ class Item < ApplicationRecord
   validates :inventory, numericality: { greater_than_or_equal_to: 0 }
   validates :current_price, format: { with: /\A\d+(?:\.\d{0,2})?\z/ }, numericality: { greater_than: 0 }
 
-
-  def self.merchant_discounts
-    joins(:discounts).where(user_id: current_user.id).order(:percentage)
-  end
-
   def self.popular_five
     joins(:order_items).where("order_items.fulfilled": true, enabled: true).select("items.*, sum(order_items.quantity) as total").group(:id).order("total desc").limit(5)
   end
@@ -70,5 +65,9 @@ class Item < ApplicationRecord
 
   def qualify_for_discount?(quantity)
     discounts.any? && quantity >= discounts.minimum(:min_quantity)
+  end
+
+  def calculation_percentage(quantity)
+    1 - self.max_eligible_discount(quantity).percentage
   end
 end
