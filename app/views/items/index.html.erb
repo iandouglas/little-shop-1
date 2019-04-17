@@ -2,24 +2,6 @@
   <h2>Statistics</h2>
   <div class="five_most">
     <h3>Most Popular Items</h3>
-    <script type="text/javascript">
-      var svg = d3.select('div.popular')
-                  .append('svg')
-                  .attr('width', '800px')
-                  .attr('height', '400px')
-      svg.selectAll('rect.bar')
-        .data(<%= @items.popular_five %>)
-        .enter()
-        .append('rect')
-        .attr('width',function(d,i){return d.width})
-        .attr('height',function(d,i){return d.height})
-        .attr('x',function(d,i){return i * d.width})
-        .attr('y',function(d,i){return divHeight - d.height})
-    </script>
-    <div id="popular-graph">
-      <svg id="popular">
-      </svg>
-    </div>
     <% @items.popular_five.each do |item| %>
     <div class="popular">
       <img src=<%= item.image_url %> class="tiny-image" alt="image of <%= item.item_name %>"></a>
