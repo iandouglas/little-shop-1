@@ -45,4 +45,25 @@ RSpec.describe 'As a user', type: :feature do
       expect(page).to have_content("Total: $#{expected}")
     end
   end
+
+  context "on my orders index page" do
+    it "shows the correct total with a discount" do
+      visit item_path(@i19)
+
+      click_button "Add to Cart"
+
+      visit cart_path
+
+      select "5", from: :quantity
+
+      click_button "Update Quantity"
+
+      click_button "Check Out"
+
+      expect(current_path).to eq(profile_orders_path)
+
+      expected = @i19.current_price * (1 - @d1.percentage) * 5
+      expect(page).to have_content("Total: $#{expected}")
+    end
+  end
 end
