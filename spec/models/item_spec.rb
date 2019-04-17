@@ -17,6 +17,9 @@ RSpec.describe Item, type: :model do
     # @i9 = @u4.items.create(item_name: "Angel's Envy Kentucky Straight Bourbon finished in Port Wine Barrels",image_url: "https://d256619kyxncpv.cloudfront.net/gui/img/2015/09/17/13/2015091713_angels_envy_bourbon_original.png",current_price: 55.0,inventory: 27, description:"Gold color laced with reddish amber hues, nearly copper in tone. You’ll detect notes of subtle vanilla, raisins, maple syrup and toasted nuts. Vanilla, ripe fruit, maple syrup, toast and bitter chocolate. Clean and lingering sweetness with a hint of Madeira that slowly fades.",enabled: true)
     # @i10 = @u8.items.create(item_name: "Laws Four Grain Straight Bourbon",image_url: "https://static.whiskybase.com/storage/whiskies/6/3/733/177713-normal.png",current_price: 60.0,inventory: 43, description:"Aromas of orange blossom compliment notes of black tea, honey, and dusty pepper on the nose. Flavors of pekoe tea, orange peel, cinnamon, and vanilla custard dominate the palate. Hints of sweet tobacco and spice lead to a rich, dry finish.",enabled: true)
 
+    @d1 = @i1.discounts.create!(percentage: 0.05, min_quantity: 5)
+    @d2 = @i1.discounts.create!(percentage: 0.10, min_quantity: 15)
+    @d3 = @i2.discounts.create!(percentage: 0.15, min_quantity: 30)
 
     @o1 = @u17.orders.create(status: 2)
     @o2 = @u17.orders.create(status: 2)
@@ -28,7 +31,6 @@ RSpec.describe Item, type: :model do
     @oi4 = OrderItem.create(order_id: @o2.id,item_id: @i2.id, quantity: 2,fulfilled: true,order_price: 58.0,created_at: "2018-04-10 09:04:53",updated_at: "2018-04-12 00:25:16")
     @oi5 = OrderItem.create(order_id: @o3.id,item_id: @i1.id, quantity: 6,fulfilled: false,order_price: 44.0,created_at: "2018-04-05 20:03:19",updated_at: "2018-04-14 11:15:44")
     @oi6 = OrderItem.create(order_id: @o3.id,item_id: @i2.id, quantity: 8,fulfilled: false,order_price: 63.0,created_at: "2018-04-04 10:42:04",updated_at: "2018-04-17 16:22:35")
-
   end
 
   describe "Relationships" do
@@ -112,5 +114,10 @@ RSpec.describe Item, type: :model do
         expect(@i2.inventory).to eq(28)
       end
     end
+
+    describe ".calculation_percentage"
+      it "should give the inverse of the percentage attribute" do
+        expect(@i1.calculation_percentage(5)).to eq(0.95)
+      end
   end
 end

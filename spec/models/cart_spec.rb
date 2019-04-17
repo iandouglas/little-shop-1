@@ -15,7 +15,7 @@ RSpec.describe Cart do
             item_name: "W.L. Weller Special Reserve",
             description: "A sweet nose with a presence of caramel. Tasting notes of honey, butterscotch, and a soft woodiness. It's smooth, delicate and calm. Features a smooth finish with a sweet honeysuckle flair.",
             image_url: "http://www.buffalotracedistillery.com/sites/default/files/Weller_CYPB_750ml_front_LoRes.png",
-            inventory: 4,
+            inventory: 15,
             current_price: 0.3e2,
             enabled: true)
     @item3 = @umerch.items.create!(
@@ -26,9 +26,13 @@ RSpec.describe Cart do
             current_price: 0.25e2,
             enabled: true)
 
+            @d1 = @item2.discounts.create!(percentage: 0.05, min_quantity: 5)
+            @d2 = @item2.discounts.create!(percentage: 0.10, min_quantity: 15)
+            @d3 = @item2.discounts.create!(percentage: 0.15, min_quantity: 30)
+
     @cart = Cart.new({
       "#{@item.id}" => 3,
-      "#{@item2.id}" => 1,
+      "#{@item2.id}" => 5,
       "#{@item3.id}" => 2
       })
   end
@@ -36,7 +40,7 @@ RSpec.describe Cart do
   describe ".total_count" do
     it "should add up all cart items" do
 
-      expect(@cart.total_count).to eq(6)
+      expect(@cart.total_count).to eq(10)
     end
   end
 
@@ -49,7 +53,7 @@ RSpec.describe Cart do
   describe ".add_item" do
     it "should add item to my cart" do
       @cart.add_item(@item2.id)
-      expect(@cart.count_of(@item2.id)).to eq(2)
+      expect(@cart.count_of(@item2.id)).to eq(6)
     end
   end
 
@@ -57,11 +61,14 @@ RSpec.describe Cart do
     it "should calculate item quantity times price" do
       expect(@cart.subtotal(@item)).to eq(60.0)
     end
+    it "should calculate the price with a discount" do
+      expect(@cart.subtotal(@item2)).to eq(142.5)
+    end
   end
 
   describe ".cart_total" do
     it "calculates total cart price" do
-      expect(@cart.cart_total).to eq(140.0)
+      expect(@cart.cart_total).to eq(252.5)
     end
   end
 end
