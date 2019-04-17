@@ -1,6 +1,10 @@
 
 <h2 class="heading">Order: <%= @order.id %></h2>
+
 <div class="order-card">
+  <% if @coupon %>
+  <h3>Coupon: <%= @coupon.name %></h3>
+  <% end %>
   <h5>Created: <%= @order.created_at %></h5>
   <h5>Last Update: <%= @order.updated_at %></h5>
   <h5>Status: <%= @order.status %></h5> <!-- enums -->

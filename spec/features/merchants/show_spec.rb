@@ -41,6 +41,15 @@ RSpec.describe "Merchant Show Page" do
       expect(page).to_not have_content("#{@u7.password}")
     end
 
+
+    it "should have a link to the merchant's coupon page" do
+      visit dashboard_path
+      expect(page).to have_link("My Coupons")
+      click_link ("My Coupons")
+      expect(current_path).to eq(dashboard_coupons_path)
+    end
+
+
     it 'show unfulfilled order information' do
       visit dashboard_path
       expect(page).to have_content("Order ID: #{@o39.id}")
@@ -90,6 +99,15 @@ RSpec.describe "Merchant Show Page" do
         expect(page).to have_content("Total Items Sold: 24")
         expect(page).to have_content("Percentage of Inventory Sold: 8.33%")
       end
+    end
+
+    it "shows charts for the statistics" do
+      visit merchants_path
+      expect(page).to have_css("#chart-1")
+      expect(page).to have_css("#chart-2")
+      expect(page).to have_css("#chart-3")
+      expect(page).to have_css("#chart-4")
+      expect(page).to have_css("#chart-5")
     end
   end
 

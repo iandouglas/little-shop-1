@@ -1,0 +1,19 @@
+<h1>Add Coupon</h1>
+
+<div class="welcome-login">
+  <%= form_for [:dashboard, @coupon], url: {action: "create"} do |f| %>
+  <%= f.error_messages %>
+
+  <%= f.label :name %>
+  <%= f.text_field :name, required: true %>
+
+  <%= f.label :discount %>
+  <%= f.select(:discount, Coupon.discounts.keys.map {|discount| [discount.titleize,discount]}) %>
+
+  <%= f.label :amount %>
+  <%= f.number_field :amount, required: true, min: 0 %>
+
+  <%= f.submit "Add Coupon", id: "medium-button" %>
+  <% end %>
+
+</div>

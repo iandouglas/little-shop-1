@@ -38,4 +38,10 @@ RSpec.describe OrderItem, type: :model do
       expect(@oi6.fulfilled?).to eq(false)
     end
   end
+
+  # describe ".discount_price" do
+  #   it "should check for a coupon and then calculate the price" do
+  #     expect(@oi1.discount_price).to eq()
+  #   end
+  # end
 end

@@ -191,6 +191,18 @@ a img {
   text-decoration: none;
 }
 
+.coupon-card a {
+  color: #FFF5DB;
+  text-decoration: none;
+  font-size: 1.4em;
+  align-self: center;
+}
+
+.coupon-card a:hover {
+  color: #2D4262;
+  text-decoration: none;
+}
+
 .customer-order-card a {
   color: #FFF5DB;
   text-decoration: none;
@@ -366,6 +378,19 @@ a img {
   padding-left: 25px;
   font-size: 20px;
 }
+
+.coupon-card {
+  display: flex;
+  flex-direction: column;
+  background: rgba(193,140,90,0.71);
+  margin: 10px;
+  margin-left: 20vw;
+  margin-right: 20vw;
+  border-radius: 25px;
+  padding-left: 25px;
+  font-size: 20px;
+}
+
 .admin-order-card {
   display: flex;
   flex-direction: column;
@@ -562,6 +587,18 @@ a img {
   background: #7895c1;
 }
 
+.buttons {
+  display: flex;
+  justify-content: space-around;
+  padding-left: 10px;
+  color:#FFF5DB;
+}
+
+.charts {
+  display: flex;
+  justify-content: space-around;
+}
+
 #button {
   border: none;
   background: #FFF5DB;
@@ -592,4 +629,9 @@ a img {
   background: #110505;
   color: #FFF5DB;
   text-decoration: none;
+}
+
+#discount {
+  background: maroon;
+  color: #FFF5DB;
 }

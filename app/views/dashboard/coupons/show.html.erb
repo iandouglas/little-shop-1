@@ -1,0 +1,34 @@
+<h1><%= @coupon.name %></h1>
+
+<div class="coupon-card">
+  <h1>Info</h1>
+  <div class="buttons">
+    <% if @coupon.percent? %>
+    <h2><%= @coupon.amount %>% off</h2>
+    <% elsif @coupon.dollar? %>
+    <h2><%= number_to_currency(@coupon.amount) %> off</h2>
+    <% end %>
+    <h2><%= @coupon.active %></h2>
+  </div>
+  <br>
+  <div class="buttons">
+    <% if @coupon.activated? %>
+    <%= link_to "Deactivate", deactivate_dashboard_coupon_path, method: :patch, id: "button" %>
+    <% else %>
+    <%= link_to "Activate", activate_dashboard_coupon_path, method: :patch, id: "button" %>
+    <% end %>
+    <br>
+    <%= link_to "Update Coupon", edit_dashboard_coupon_path(@coupon), id: "button" %>
+    <br>
+    <% if @users.count == 0 %>
+    <%= link_to "Delete Coupon", dashboard_coupon_path, method: :delete, id: "button" %>
+    <% end %>
+  </div>
+  <br>
+  <h3>Coupon used by: </h3>
+  <% @users.each do |user| %>
+  <ul>
+    <li><%= user.name %></li>
+  </ul>
+  <% end %>
+</div>

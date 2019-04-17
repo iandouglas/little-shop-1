@@ -17,5 +17,16 @@ RSpec.describe 'On the merchant index page' do
       expect(page).to_not have_content("#{@u3.name}")
       expect(page).to_not have_content("Ships from: #{@u3.city}, #{@u3.state}")
     end
+
+    it "shows charts for the statistics" do
+      visit merchants_path
+      expect(page).to have_css("#chart-1")
+      expect(page).to have_css("#chart-2")
+      expect(page).to have_css("#chart-3")
+      expect(page).to have_css("#chart-4")
+      expect(page).to have_css("#chart-5")
+      expect(page).to have_css("#chart-6")
+      expect(page).to have_css("#chart-7")
+    end
   end
 end

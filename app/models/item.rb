@@ -14,6 +14,12 @@ class Item < ApplicationRecord
     joins(:order_items).where("order_items.fulfilled": true, enabled: true).select("items.*, sum(order_items.quantity) as total").group(:id).order("total desc").limit(5)
   end
 
+  def self.popular_array
+    self.popular_five.inject([]) do |array, item|
+      array << [item.item_name, item.total]
+    end
+  end
+
   def self.unpopular_five
     unpopular = []
     oi_item_ids = OrderItem.select(:item_id).distinct.pluck(:item_id)

@@ -6,6 +6,10 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <%= stylesheet_link_tag    'application', media: 'all' %>
     <%= javascript_include_tag 'application' %>
+
+    <%= javascript_include_tag "http://www.google.com/jsapi", "chartkick" %>
+    <%= javascript_include_tag 'http://yandex.st/bootstrap/3.1.1/js/bootstrap.min.js' %>
+
   </head>
 
   <nav>
@@ -48,11 +52,14 @@
   </nav>
 
   <body>
-    <% flash.each do |name, message| %>
+    <div class="body">
+      <% flash.each do |name, message| %>
       <div class='alert alert-<%= name %>', role="alert">
         <%= message %>
       </div>
-    <% end %>
-    <%= yield %>
+      <% end %>
+      <%= yield %>
+
+    </div>
   </body>
 </html>

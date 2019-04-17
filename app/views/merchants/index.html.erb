@@ -1,22 +1,30 @@
 <div class="merch-stats">
  <h2> Statistics </h2>
   <div class="top-merchants">
-  <h5>Top 3 Merchants:</h5> <% @top.each do |merchant| %>
-    <%= merchant.name %> -
-    <%= number_to_currency(merchant.sum) %><br>
-  <% end %><br>
-  <h5>Biggest Orders:</h5> <% @orders.each do |order| %>
+    <h5>Merchant Chart:</h5>
+    <%= pie_chart @total_revenue %>
+    <br>
+    <h5>Top 3 Merchants:</h5>
+    <%= pie_chart @top_three %>
+    <br>
+    <h5>Biggest Orders:</h5>
+    <%= pie_chart @biggest %>
+  <% @orders.each do |order| %>
   ID: <%= order.id %> -
   <%= order.sum %> units<br>
   <% end %><br>
   </div>
 
   <div class="merchant-speed">
-  <h5>Fastest Merchants:</h5> <% @fastest.each do |merchant| %>
+  <h5>Fastest Merchants:</h5>
+  <%= bar_chart @fastest_array %>
+  <% @fastest.each do |merchant| %>
       <%= merchant.name %> -
       <%= merchant.avg %><br>
     <% end %><br>
-  <h5>Slowest Merchants:</h5> <% @slowest.each do |merchant| %>
+  <h5>Slowest Merchants:</h5>
+    <%= bar_chart @slowest_array %>
+  <% @slowest.each do |merchant| %>
       <%= merchant.name %> -
       <%= merchant.avg %><br>
     <% end %><br>
@@ -24,11 +32,14 @@
 
   <div class="top-geographical">
   <h5>Top 3 States:</h5>
+  <p id="pie-chart"><%= pie_chart @overall_states %></p>
     <% @states.each do |relation| %>
     <%= relation.state %> -
     <%= relation.count %> orders<br>
   <% end %><br>
-  <h5>Top 3 Cities:</h5> <% @citystates.each do |relation| %>
+  <h5>Top 3 Cities:</h5>
+  <p id="pie-chart"><%= pie_chart @overall_cities %></p>
+  <% @citystates.each do |relation| %>
     <%= relation.citystate %> -
     <%= relation.count %> orders<br>
   <% end %><br>

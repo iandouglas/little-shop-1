@@ -16,15 +16,21 @@
       Total Items Sold: <%= current_user.total_quantity_sold %>
       <br>
       Percentage of Inventory Sold: <%= current_user.percentage_sold.round(2) %>%
+      <p id="pie-chart"><%= pie_chart @percent %></p>
+      Revenue per Month -
+      <p id="bar-chart"><%= bar_chart @monthly_revenue %></p>
+      Revenue per Day of the Month - 
+      <p id="bar-chart"><%= bar_chart @daily_revenue %></p>
     </div>
-    Top 3 States -
-    <% @top_3_states.each do |relation| %>
-      <%= relation.state %>: <%= relation.sum %>
-    <% end %>
-    Top 3 Cities -
-    <% @top_3_cities.each do |relation| %>
-      <%= relation.citystate %>: <%= relation.sum %>
-    <% end %>
+    <br>
+
+    <div class="charts">
+      - Top 3 States   -------------------------------   Top 3 Cities -
+    </div>
+    <div class="charts">
+      <p id="pie-chart"><%= pie_chart @three_states_array %></p>
+      <p id="pie-chart"><%= pie_chart @three_cities_array %></p>
+    </div>
   </div>
   <% end %>
   <div>
@@ -51,6 +57,7 @@
     <p>Zip Code: <%= current_user.zip_code %></p>
     <p>Email Address: <%= current_user.email_address %></p>
     <%= link_to "My Items", dashboard_items_path, id: "button" %>
+    <%= link_to "My Coupons", dashboard_coupons_path, id: "button" %>
   </div>
 
   <div class='pending-orders'>

@@ -1,0 +1,15 @@
+<h1>My Coupons</h1>
+
+<% @coupons.each do |coupon| %>
+  <div class="coupon-card">
+    <%= link_to coupon.name, dashboard_coupon_path(coupon) %>
+
+  </div>
+<% end %>
+<br>
+<br>
+<div class="coupon-card">
+  <% if @count < 5 %>
+  <%= link_to "Add Coupon", new_dashboard_coupon_path %>
+  <% end %>
+</div>

@@ -30,6 +30,11 @@
     <div class="cart-card">
       <div class="total">
         Total: <%= number_to_currency(@cart.cart_total) %>
+        <% if session[:coupon] %>
+          <div id="discount">
+            Discount Total: <%= number_to_currency(@cart.discount_total(@coupon)) %>
+          </div>
+        <% end %>
       <% if !current_user %>
       <div class="login-register">
         Please <%= link_to 'Register', new_user_path, id: "button" %> or <%= link_to 'Log In', login_path, id: "button" %> to place your order.
@@ -37,6 +42,10 @@
       <% else %>
       <div class="checkout">
         <%= button_to 'Check Out', profile_orders_path, method: :create, class: "browse-button" %>
+        <%= form_tag(discount_cart_path, method: :patch) do %>
+          <%= text_field_tag "Coupon code" %>
+          <%= submit_tag "Add Coupon" %>
+        <% end %>
       </div>
       <% end %>
     </div>

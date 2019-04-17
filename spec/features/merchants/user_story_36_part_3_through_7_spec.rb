@@ -39,17 +39,18 @@ RSpec.describe 'when we visit a merchant show page' do
     visit dashboard_path
   end
 
-  it 'shows us top 3 states where items were shipped with quantities' do
-    within ".statistics" do
-      expect(page).to have_content("Top 3 States - California: 34 Nevada: 30 Pennsylvania: 18")
-    end
-  end
-
-  it 'shows us top 3 city,ST wher items were shipped with quantities' do
-    within ".statistics" do
-      expect(page).to have_content("Top 3 Cities - Fresno, Nevada: 30 Miami, California: 20 Harrisburg, Pennsylvania: 18")
-    end
-  end
+ # now in pie charts
+  # it 'shows us top 3 states where items were shipped with quantities' do
+  #   within ".statistics" do
+  #     expect(page).to have_content("Top 3 States - California: 34 Nevada: 30 Pennsylvania: 18")
+  #   end
+  # end
+  #
+  # it 'shows us top 3 city,ST wher items were shipped with quantities' do
+  #   within ".statistics" do
+  #     expect(page).to have_content("Top 3 Cities - Fresno, Nevada: 30 Miami, California: 20 Harrisburg, Pennsylvania: 18")
+  #   end
+  # end
 
   it 'shows us top users' do
     within ".statistics" do

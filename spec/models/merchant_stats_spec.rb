@@ -59,6 +59,13 @@ RSpec.describe 'when we visit a merchant show page' do
     end
   end
 
+  describe "self.top_three_states_array" do
+    it "turns the top 3 states into an array with state/quantity" do
+      expected = [["California", 34],["Nevada",30],["Pennsylvania",18]]
+      expect(User.top_three_states_array(@umerch)).to eq(expected)
+    end
+  end
+
   describe 'self.top_three_city_states' do
     it 'lists top 3 city, states by quantity sold' do
       expect(User.top_three_city_states(@umerch).first.citystate).to eq("Fresno, Nevada")
@@ -69,6 +76,14 @@ RSpec.describe 'when we visit a merchant show page' do
       expect(User.top_three_city_states(@umerch).third.sum).to eq(18)
     end
   end
+
+  describe "self.top_three_city_states_array" do
+    it "turns the top 3 states into an array with state/quantity" do
+      expected = [["Fresno, Nevada", 30],["Miami, California",20],["Harrisburg, Pennsylvania",18]]
+      expect(User.top_three_city_states_array(@umerch)).to eq(expected)
+    end
+  end
+
 
   describe "self.top_three_merchants_overall" do
     it "lists top 3 merchants by quantity * price" do
@@ -109,6 +124,7 @@ RSpec.describe 'when we visit a merchant show page' do
     end
   end
 
+
   describe "self.top_three_city_states_overall" do
     it "lists top 3 city,states overall by order count" do
       expect(User.top_three_city_states_overall.first.citystate).to eq("Miami, California")
@@ -128,6 +144,55 @@ RSpec.describe 'when we visit a merchant show page' do
       expect(User.three_biggest_orders.second.sum).to eq(20)
       expect(User.three_biggest_orders.third.id).to eq(@o8.id)
       expect(User.three_biggest_orders.third.sum).to eq(18)
+    end
+  end
+
+  describe ".total_sales_array" do
+    it "makes an array of merchant names and their total revenue" do
+      expected = [["#{@umerch2.name}",66710],["#{@umerch.name}",7830]]
+      expect(User.total_sales_array).to eq(expected)
+    end
+  end
+
+  describe ".top_merchants_array" do
+    it "makes an array of top merchant names and their total revenue" do
+      expected = [["#{@umerch2.name}",66710],["#{@umerch.name}",7830]]
+      expect(User.top_merchants_array).to eq(expected)
+    end
+  end
+
+  describe ".biggest_orders_array" do
+    it "makes an array of the biggest orders by id" do
+      expected = [["#{@o12.id}",400],["#{@o9.id}",20],["#{@o8.id}",18]]
+      expect(User.biggest_orders_array).to eq(expected)
+    end
+  end
+
+  describe "self.fastest_array" do
+    it "lists top 3 merchants by speed of fulfillment" do
+      expected = [["#{@umerch.name}","7 days 24:05:59.444444"],["#{@umerch2.name}","8 days 19:03:04.25"]]
+      expect(User.fastest_array).to eq(expected)
+    end
+  end
+
+  describe "self.slowest_array" do
+    it "lists bottom 3 merchants by speed of fulfillment or lack thereof" do
+      expected = [["#{@umerch2.name}","8 days 19:03:04.25"],["#{@umerch.name}","7 days 24:05:59.444444"]]
+      expect(User.slowest_array).to eq(expected)
+    end
+  end
+
+  describe "self.states_overall_array" do
+    it "creates an array of the overall top states" do
+      expected = [["California",6],["Nevada",3],["Missouri",2]]
+      expect(User.states_overall_array).to eq(expected)
+    end
+  end
+
+  describe "self.cities_overall_array" do
+    it "creates an array of the overall top cities" do
+      expected = [["Miami, California",5],["Fresno, Nevada",3],["Saint Louis, Missouri",2]]
+      expect(User.cities_overall_array).to eq(expected)
     end
   end
 end

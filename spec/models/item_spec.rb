@@ -49,6 +49,13 @@ RSpec.describe Item, type: :model do
         expect(Item.unpopular_five).to include(@i4)
       end
     end
+
+    describe "popular_array" do
+      it "should return an array of the popular five name/quantity" do
+        expected = [["#{@i1.item_name}", 8],["#{@i2.item_name}", 6]]
+        expect(Item.popular_array).to eq(expected)
+      end
+    end
   end
 
   context 'items specific to merchant' do

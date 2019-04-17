@@ -1,0 +1,20 @@
+<h1><%= @coupon.name %></h1>
+<div class="welcome-login">
+  <%= form_for @coupon, url: {action: "update"} do |f| %>
+    <%= f.error_messages %>
+    <%= f.label :name %>
+    <%= f.text_field :name, required: true %>
+
+    <%= f.label :discount %>
+    <%= f.select(:discount, Coupon.discounts.keys.map {|discount| [discount.titleize,discount]}) %>
+
+    <%= f.label :amount %>
+    <% if @coupon.discount == "dollar" %>
+      <%= f.number_field :amount, required: true, min: 0 %>
+    <% else %>
+      <%= f.number_field :amount, required: true, min: 0 , max: 100 %>
+    <% end %>
+
+    <%= f.submit "Update Coupon", id: "medium-button" %>
+  <% end %>
+</div>
