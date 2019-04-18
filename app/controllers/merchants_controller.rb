@@ -9,6 +9,7 @@ skip_before_action :require_merchant, only: [:index]
     @states = User.top_three_states_overall
     @citystates = User.top_three_city_states_overall
     @orders = User.three_biggest_orders
+    @pie_chart_merchants_total_sales = @merchants.chart_merchant_site_sales_portion
   end
 
   def show
@@ -21,6 +22,9 @@ skip_before_action :require_merchant, only: [:index]
     @top_user = User.top_user_by_orders(@merchant)
     @top_user_by_items = User.top_user_by_items(@merchant)
     @top_users_by_revenue = User.top_users_by_revenue(@merchant)
+    @pie_chart_top_3_states = User.chart_top_three_states(@merchant)
+    @pie_chart_percentage_sold = @merchant.chart_percentage_sold
+    @bar_chart_monthly_revenue = @merchant.chart_revenue_by_month
   end
 
   private

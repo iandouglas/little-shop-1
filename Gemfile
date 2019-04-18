@@ -29,8 +29,7 @@ gem 'jbuilder', '~> 2.5'
 gem 'bcrypt', '~> 3.1.7'
 gem 'pry'
 gem 'dynamic_form'
-gem 'jquery-rails'
-gem 'd3-rails'
+gem 'chartkick'
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
 

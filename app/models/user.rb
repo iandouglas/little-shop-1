@@ -47,6 +47,7 @@ class User < ApplicationRecord
 
   def self.top_three_states(merchant)
     joins(orders: :order_items).select(:state,"SUM(order_items.quantity)").where("order_items.fulfilled": true, "order_items.item_id": merchant.items.ids).group(:state).order("sum(order_items.quantity) DESC").limit(3)
+    # joins(orders: :order_items).select("users.*, SUM(order_items.quantity)").where("order_items.fulfilled": true, "order_items.item_id": merchant.items.ids).group(:state).order("sum(order_items.quantity) DESC").limit(3)
   end
 
   def self.top_three_city_states(merchant)
@@ -91,4 +92,35 @@ class User < ApplicationRecord
     x = joins(orders: :order_items).where("order_items.fulfilled": true).select("orders.id", "sum(order_items.quantity)").group("orders.id").order("sum(order_items.quantity) DESC").limit(3)
   end
 
+  def self.chart_top_three_states(merchant)
+    relations = top_three_states(merchant).map {|relation| [relation.state, relation.sum]}
+    relations.to_h
+  end
+
+  def chart_percentage_sold
+    ps = percentage_sold
+    ri = (100 - ps).round(2)
+    {"Sold Inventory" => ps.round(2), "Remaining Inventory" => ri}
+  end
+
+  def self.chart_merchant_site_sales_portion
+    all_sales = OrderItem.all
+    site_revenue = all_sales.sum do |order_item|
+      order_item.order_price * order_item.quantity
+    end
+    joins(items: :order_items).select("users.name", "SUM(order_items.quantity * order_items.order_price)")
+      .where("order_items.fulfilled": true)
+      .group("users.id")
+      .order("SUM(order_items.quantity * order_items.order_price) DESC").map do |merchant|
+        [merchant.name, (merchant.sum / site_revenue).to_f.round(3)]
+      end.to_h
+  end
+
+  def chart_revenue_by_month
+    x = items.select("date_trunc('month', orders.updated_at) AS month,sum(order_items.quantity * order_items.order_price) AS sales").joins(order_items: :order).distinct.where(orders: {status: 2}).group('month').order('month DESC')
+    
+    x.map do |relation|
+      [(relation.month).strftime("%B"), relation.sales]
+    end.to_h
+  end
 end

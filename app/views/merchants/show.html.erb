@@ -15,9 +15,16 @@
     <div class="percentage-sold">
       Total Items Sold: <%= current_user.total_quantity_sold %>
       <br>
+
+      <%= pie_chart @pie_chart_percentage_sold %>
+
       Percentage of Inventory Sold: <%= current_user.percentage_sold.round(2) %>%
     </div>
+    <%= bar_chart @bar_chart_monthly_revenue %>
     Top 3 States -
+
+    <%= pie_chart @pie_chart_top_3_states %>
+
     <% @top_3_states.each do |relation| %>
       <%= relation.state %>: <%= relation.sum %>
     <% end %>
