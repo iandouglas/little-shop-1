@@ -9,6 +9,8 @@
   ID: <%= order.id %> -
   <%= order.sum %> units<br>
   <% end %><br>
+  Merchants' portions of site revenue:
+  <%= pie_chart @pie_chart_merchants_total_sales %>
   </div>
 
   <div class="merchant-speed">

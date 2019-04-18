@@ -29,6 +29,8 @@ RSpec.describe User, type: :model do
 
       @u4 = User.create(name: "Sibbie Cromett",street_address: "0 Towne Avenue",city: "Birmingham",state: "Alabama",zip_code: "35211",email_address: "scromett3@github.io",password:"fEFJeHdT1K", enabled: true, role:0)
       @u34 = User.create(name: "Jazmin Frederick",street_address: "59 Victoria Lane",city: "Atlanta",state: "Georgia",zip_code: "30318",email_address: "jfrederickx@t-online.de",password:"FZbJe0", enabled: true, role:0)
+      @u35 = User.create(name: "Osbert Lack",street_address: "831 Golf View Place",city: "San Francisco",state: "California",zip_code: "94112",email_address: "olacky@issuu.com",password:"9b7ukbbC", enabled: true, role:0)
+      @u36 = User.create(name: "Lucienne Reah",street_address: "02669 Caliangt Drive",city: "Phoenix",state: "Arizona",zip_code: "85032",email_address: "lreahz@wordpress.org",password:"PF66a5", enabled: true, role:0)
 
       @umerch2 = User.create(name: "Raff Faust",street_address: "066 Debs Place",city: "El Paso",state: "Texas",zip_code: "79936",email_address: "rfauft1@naver.com",password:"ZCoxai", enabled: true, role:1)
 
@@ -45,14 +47,23 @@ RSpec.describe User, type: :model do
       @o59 = @u4.orders.create(status: 0)
       @o60 = @u34.orders.create(status: 2)
       @o61 = @u34.orders.create(status: 2)
+      @o62 = @u35.orders.create(status: 2)
+      @o64 = @u35.orders.create(status: 0)
+      @o66 = @u35.orders.create(status: 0)
+      @o65 = @u36.orders.create(status: 2)
+      @o63 = @u36.orders.create(status: 2)
 
-      @oi171 = OrderItem.create(order_id: @o39.id,item_id: @i39.id, quantity: 7,fulfilled: true,order_price: 53.0,created_at: "2018-04-07 22:05:50",updated_at: "2018-04-17 08:47:14")
-      @oi172 = OrderItem.create(order_id: @o39.id,item_id: @i44.id, quantity: 7,fulfilled: true,order_price: 53.0,created_at: "2018-04-07 22:05:50",updated_at: "2018-04-17 08:47:14")
-      @oi214 = OrderItem.create(order_id: @o49.id,item_id: @i44.id, quantity: 2,fulfilled: false,order_price: 48.0,created_at: "2018-04-10 11:06:18",updated_at: "2018-04-15 04:26:51")
+      @oi171 = OrderItem.create(order_id: @o39.id,item_id: @i39.id, quantity: 7,fulfilled: true,order_price: 53.0,created_at: "2018-05-07 22:05:50",updated_at: "2018-05-17 08:47:14")
+      @oi172 = OrderItem.create(order_id: @o39.id,item_id: @i44.id, quantity: 7,fulfilled: true,order_price: 53.0,created_at: "2018-05-07 22:05:50",updated_at: "2018-05-17 08:47:14")
+      @oi214 = OrderItem.create(order_id: @o49.id,item_id: @i44.id, quantity: 2,fulfilled: false,order_price: 48.0,created_at: "2018-05-10 11:06:18",updated_at: "2018-05-15 04:26:51")
       @oi215 = OrderItem.create(order_id: @o49.id,item_id: @i23.id, quantity: 2,fulfilled: false,order_price: 48.0,created_at: "2018-04-10 11:06:18",updated_at: "2018-04-15 04:26:51")
       @oi275 = OrderItem.create(order_id: @o59.id,item_id: @i23.id, quantity: 2,fulfilled: false,order_price: 48.0,created_at: "2018-04-10 11:06:18",updated_at: "2018-04-15 04:26:51")
       @oi275 = OrderItem.create(order_id: @o61.id,item_id: @i39.id, quantity: 2,fulfilled: true,order_price: 48.0,created_at: "2018-04-10 11:06:18",updated_at: "2018-04-15 04:26:51")
-      @oi275 = OrderItem.create(order_id: @o60.id,item_id: @i44.id, quantity: 2,fulfilled: true,order_price: 48.0,created_at: "2018-04-10 11:06:18",updated_at: "2018-04-15 04:26:51")
+      @oi275 = OrderItem.create(order_id: @o62.id,item_id: @i44.id, quantity: 2,fulfilled: true,order_price: 48.0,created_at: "2018-04-10 11:06:18",updated_at: "2018-04-15 04:26:51")
+      @oi300 = OrderItem.create(order_id: @o62.id,item_id: @i23.id, quantity: 2,fulfilled: false,order_price: 48.0,created_at: "2018-08-10 11:06:18",updated_at: "2018-08-15 08:26:51")
+      @oi301 = OrderItem.create(order_id: @o66.id,item_id: @i23.id, quantity: 2,fulfilled: false,order_price: 48.0,created_at: "2018-08-10 11:06:18",updated_at: "2018-08-15 08:26:51")
+      @oi302 = OrderItem.create(order_id: @o65.id,item_id: @i39.id, quantity: 2,fulfilled: true,order_price: 48.0,created_at: "2018-08-10 11:06:18",updated_at: "2018-08-15 08:26:51")
+      @oi303 = OrderItem.create(order_id: @o63.id,item_id: @i44.id, quantity: 2,fulfilled: true,order_price: 48.0,created_at: "2018-04-10 11:06:18",updated_at: "2018-04-15 04:26:51")
     end
 
     describe ".my_item_count" do
@@ -83,19 +94,19 @@ RSpec.describe User, type: :model do
 
     describe "total_quantity_sold" do
       it "should give the total quantity of a merchant's sold items" do
-        expect(@umerch.total_quantity_sold).to eq(18)
+        expect(@umerch.total_quantity_sold).to eq(22)
       end
     end
 
     describe "percentage sold" do
       it "should give the percentage of a merchant's inventory sold" do
-        expect(@umerch.percentage_sold.round(2)).to eq(17.65)
+        expect(@umerch.percentage_sold.round(2)).to eq(20.75)
       end
     end
 
     describe "top user by orders" do
       it "should give one user name and they will have most orders" do
-        expect(User.top_user_by_orders(@umerch).name).to eq(@u34.name)
+        expect(User.top_user_by_orders(@umerch).name).to eq(@u36.name)
         expect(User.top_user_by_orders(@umerch).count).to eq(2)
       end
     end
@@ -117,6 +128,35 @@ RSpec.describe User, type: :model do
     describe ".my_discounts" do
       it "should return a particular merhcant's discounts" do
         expect(@umerch.my_discounts).to eq([@d2, @d1, @d3])
+      end
+    end
+
+    describe '.chart_top_three_states' do
+      it "should return a hash of the merhcant's top 3 states for use in a js chart" do
+        expected = {"Alabama"=>14, "Arizona"=>4, "California"=>2}
+        expect(User.chart_top_three_states(@umerch)).to eq(expected)
+      end
+    end
+
+    describe '.chart_percentage_sold' do
+      it "should return a hash of the merchant's sold inventory and remaining inventory" do
+        expect(@umerch.chart_percentage_sold).to eq({"Sold Inventory" => 20.75, "Remaining Inventory" => 79.25})
+      end
+    end
+
+    describe '.chart_merchant_site_sales_portion' do
+      it "should return a hash of merchants and their portion of site revenue" do
+        expected = {@umerch.name=>0.701}
+        expect(User.chart_merchant_site_sales_portion).to eq(expected)
+      end
+    end
+
+    describe '.chart_revenue_by_month' do
+      it "should return a hash of months with revenue for that merchant" do
+        expected = {
+          "April"=>1126
+        }
+        expect(@umerch.chart_revenue_by_month).to eq(expected)
       end
     end
   end

@@ -53,6 +53,7 @@ GEM
       rack-test (>= 0.6.3)
       regexp_parser (~> 1.2)
       xpath (~> 3.2)
+    chartkick (3.0.2)
     coderay (1.1.2)
     coffee-rails (4.2.2)
       coffee-script (>= 2.2.0)
@@ -201,6 +202,7 @@ DEPENDENCIES
   bcrypt (~> 3.1.7)
   byebug
   capybara
+  chartkick
   coffee-rails (~> 4.2)
   dynamic_form
   jbuilder (~> 2.5)
