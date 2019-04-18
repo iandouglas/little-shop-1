@@ -117,13 +117,8 @@ class User < ApplicationRecord
   end
 
   def chart_revenue_by_month
-    x = items.select("date_trunc('month', orders.updated_at) AS month,sum(order_items.quantity * order_items.order_price) AS sales")
-    .joins(order_items: :order)
-    .distinct
-    .where(orders: {status: :shipped})
-    .where("orders.updated_at > (date_trunc('month', now()) - interval '11 months')")
-    .group('month')
-    .order('month DESC')
+    x = items.select("date_trunc('month', orders.updated_at) AS month,sum(order_items.quantity * order_items.order_price) AS sales").joins(order_items: :order).distinct.where(orders: {status: 2}).group('month').order('month DESC')
+    
     x.map do |relation|
       [(relation.month).strftime("%B"), relation.sales]
     end.to_h
